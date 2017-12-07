@@ -1,0 +1,83 @@
+LOG(main():main.cc:67)[14:37:07-12/07/17] /dev/ttyUSB0
+WARNING(command_excuted():base/bone-database.cc:36)[14:37:07-12/07/17] Command ping missed:
+{ "ok" : 1.0 }
+VERBOSE(begin():base/bone-database.cc:113)[14:37:07-12/07/17] Mongo Database "ScrewMachine" has connected successful !
+WARNING(command_excuted():base/bone-database.cc:36)[14:37:07-12/07/17] Command ping missed:
+{ "ok" : 1.0 }
+VERBOSE(begin():base/bone-database.cc:113)[14:37:07-12/07/17] Mongo Database "ScrewMachine" has connected successful !
+WARNING(begin():system/screw-machine.cc:12)[14:37:07-12/07/17]  -> Cant not open "/dev/ttyUSB1 "port
+LOG(main():main.cc:67)[14:42:21-12/07/17] /dev/ttyUSB0
+WARNING(command_excuted():base/bone-database.cc:36)[14:42:21-12/07/17] Command ping missed:
+{ "ok" : 1.0 }
+VERBOSE(begin():base/bone-database.cc:113)[14:42:21-12/07/17] Mongo Database "ScrewMachine" has connected successful !
+WARNING(command_excuted():base/bone-database.cc:36)[14:42:21-12/07/17] Command ping missed:
+{ "ok" : 1.0 }
+VERBOSE(begin():base/bone-database.cc:113)[14:42:21-12/07/17] Mongo Database "ScrewMachine" has connected successful !
+WARNING(begin():system/screw-machine.cc:13)[14:42:21-12/07/17]  -> Cant not open "/dev/ttyUSB1 "port
+LOG(main():main.cc:67)[14:42:46-12/07/17] /dev/ttyUSB0
+LOG(main():main.cc:67)[14:42:46-12/07/17] /dev/ttyUSB1
+WARNING(command_excuted():base/bone-database.cc:36)[14:42:46-12/07/17] Command ping missed:
+{ "ok" : 1.0 }
+VERBOSE(begin():base/bone-database.cc:113)[14:42:46-12/07/17] Mongo Database "ScrewMachine" has connected successful !
+WARNING(command_excuted():base/bone-database.cc:36)[14:42:46-12/07/17] Command ping missed:
+{ "ok" : 1.0 }
+VERBOSE(begin():base/bone-database.cc:113)[14:42:46-12/07/17] Mongo Database "ScrewMachine" has connected successful !
+LOG(main():main.cc:67)[14:42:49-12/07/17] /dev/ttyUSB0
+LOG(main():main.cc:67)[14:42:49-12/07/17] /dev/ttyUSB1
+WARNING(command_excuted():base/bone-database.cc:36)[14:42:49-12/07/17] Command ping missed:
+{ "ok" : 1.0 }
+VERBOSE(begin():base/bone-database.cc:113)[14:42:49-12/07/17] Mongo Database "ScrewMachine" has connected successful !
+WARNING(command_excuted():base/bone-database.cc:36)[14:42:49-12/07/17] Command ping missed:
+{ "ok" : 1.0 }
+VERBOSE(begin():base/bone-database.cc:113)[14:42:49-12/07/17] Mongo Database "ScrewMachine" has connected successful !
+LOG(main():main.cc:67)[14:43:24-12/07/17] /dev/ttyUSB0
+LOG(main():main.cc:67)[14:43:24-12/07/17] /dev/ttyUSB1
+WARNING(command_excuted():base/bone-database.cc:36)[14:43:24-12/07/17] Command ping missed:
+{ "ok" : 1.0 }
+VERBOSE(begin():base/bone-database.cc:113)[14:43:24-12/07/17] Mongo Database "ScrewMachine" has connected successful !
+WARNING(command_excuted():base/bone-database.cc:36)[14:43:24-12/07/17] Command ping missed:
+{ "ok" : 1.0 }
+VERBOSE(begin():base/bone-database.cc:113)[14:43:24-12/07/17] Mongo Database "ScrewMachine" has connected successful !
+LOG(main():main.cc:67)[14:43:33-12/07/17] /dev/ttyUSB0
+WARNING(command_excuted():base/bone-database.cc:36)[14:43:33-12/07/17] Command ping missed:
+{ "ok" : 1.0 }
+VERBOSE(begin():base/bone-database.cc:113)[14:43:33-12/07/17] Mongo Database "ScrewMachine" has connected successful !
+WARNING(command_excuted():base/bone-database.cc:36)[14:43:33-12/07/17] Command ping missed:
+{ "ok" : 1.0 }
+VERBOSE(begin():base/bone-database.cc:113)[14:43:33-12/07/17] Mongo Database "ScrewMachine" has connected successful !
+WARNING(begin():system/screw-machine.cc:13)[14:43:33-12/07/17]  -> Cant not open "/dev/ttyUSB1 "port
+LOG(main():main.cc:67)[14:55:27-12/07/17] 1
+LOG(main():main.cc:73)[14:55:27-12/07/17] /dev/ttyUSB0
+LOG(main():main.cc:67)[14:55:42-12/07/17] 1
+LOG(main():main.cc:73)[14:55:42-12/07/17] 2
+LOG(main():main.cc:79)[14:55:42-12/07/17] /dev/ttyUSB0
+LOG(main():main.cc:67)[14:56:39-12/07/17] 1
+LOG(main():main.cc:73)[14:56:39-12/07/17] 2
+LOG(main():main.cc:79)[14:56:39-12/07/17] /dev/ttyUSB0
+LOG(main():main.cc:67)[14:59:06-12/07/17] a
+LOG(main():main.cc:75)[14:59:06-12/07/17] b
+LOG(main():main.cc:83)[14:59:06-12/07/17] /dev/ttyUSB0
+LOG(main():main.cc:67)[15:08:27-12/07/17] a
+LOG(main():main.cc:75)[15:08:27-12/07/17] b
+LOG(main():main.cc:83)[15:08:27-12/07/17] /dev/ttyUSB0
+LOG(main():main.cc:87)[15:08:27-12/07/17] ScrewByDay_1
+LOG(main():main.cc:87)[15:08:27-12/07/17] ScrewByDay_2
+LOG(main():main.cc:67)[15:08:40-12/07/17] a
+LOG(main():main.cc:75)[15:08:40-12/07/17] b
+LOG(main():main.cc:83)[15:08:40-12/07/17] /dev/ttyUSB0
+LOG(main():main.cc:87)[15:08:40-12/07/17] ScrewByDay_1
+LOG(main():main.cc:88)[15:08:40-12/07/17] ScrewByHour_1
+LOG(main():main.cc:89)[15:08:40-12/07/17] ScrewByMinute_1
+LOG(main():main.cc:87)[15:08:40-12/07/17] ScrewByDay_2
+LOG(main():main.cc:88)[15:08:40-12/07/17] ScrewByHour_2
+LOG(main():main.cc:89)[15:08:40-12/07/17] ScrewByMinute_2
+LOG(main():main.cc:67)[17:32:36-12/07/17] a
+LOG(main():main.cc:75)[17:32:36-12/07/17] b
+LOG(main():main.cc:82)[17:32:37-12/07/17] Indentifying the plc ...
+LOG(indentifyPLC():system/screw-machine.cc:156)[17:32:37-12/07/17] /dev/ttyUSB0
+LOG(main():main.cc:86)[17:32:52-12/07/17] ScrewByDay_1
+LOG(main():main.cc:87)[17:32:52-12/07/17] ScrewByHour_1
+LOG(main():main.cc:88)[17:32:52-12/07/17] ScrewByMinute_1
+LOG(main():main.cc:86)[17:32:52-12/07/17] ScrewByDay_2
+LOG(main():main.cc:87)[17:32:52-12/07/17] ScrewByHour_2
+LOG(main():main.cc:88)[17:32:52-12/07/17] ScrewByMinute_2

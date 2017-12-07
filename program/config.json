@@ -1,0 +1,38 @@
+{
+	"system": {
+		"PRINT_MONITOR": true,
+		"PRINT_FILE": true,
+		"PRINT_FILE_MONTH": false,
+		"DEBUG_LEVEL": 3,
+		"database": "ScrewMachine"
+	},
+	"PLC": {
+		"number": 2,
+		"specification": [
+			{
+				"id": "a",
+				"collection_day": "ScrewByDay_1",
+				"collection_hour": "ScrewByHour_1",
+				"collection_minute": "ScrewByMinute_1"
+			},
+			{
+				"id": "b",
+				"collection_day": "ScrewByDay_2",
+				"collection_hour": "ScrewByHour_2",
+				"collection_minute": "ScrewByMinute_2"
+			}
+		]
+	},
+	"plc_1": {
+		"id": "a",
+		"collection_day": "ScrewByDay_1",
+		"collection_hour": "ScrewByHour_1",
+		"collection_minute": "ScrewByMinute_1"
+	},
+	"plc_2": {
+		"id": "b",
+		"collection_day": "ScrewByDay_2",
+		"collection_hour": "ScrewByHour_2",
+		"collection_minute": "ScrewByMinute_2"
+	}
+}
