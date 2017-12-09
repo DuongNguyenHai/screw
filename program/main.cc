@@ -19,8 +19,6 @@ using namespace BONE;
 int main(int argc, char const *argv[])
 {
     json conf;              // configurattion
-    ScrewMachine screw1;    // screw machine 1
-    ScrewMachine screw2;    // screw machine 2
 
     try {
         conf = json::parse(std::ifstream("config.json"));
@@ -44,61 +42,57 @@ int main(int argc, char const *argv[])
         LOG_ERR << "You have not set the database name !";
     }
 
-    // Set collection name
-    if( conf["plc_1"]["collection_day"].is_string() && conf["plc_1"]["collection_hour"].is_string() && conf["plc_1"]["collection_minute"].is_string() ) {
-        screw1.collection[0] = conf["plc_1"]["collection_day"];
-        screw1.collection[1] = conf["plc_1"]["collection_hour"];
-        screw1.collection[2] = conf["plc_1"]["collection_minute"];
-    } else {
-        LOG_ERR << "Set up fail collections for plc_1 !";
+    // step 2: setup PLC and collection of database will be saved data of PLC
+    size_t numPLC = (conf["PLC"]["setting"].is_array()) ? (int32_t)(conf["PLC"]["setting"].size()) : 0;
+    if(numPLC == 0) {
+        LOG_ERR << "\"number\" of plc is 0 !";
+    }
+    // create list PLC
+    ScrewMachine listMachine[numPLC];
+
+    for (size_t i = 0; i < numPLC; i++) {
+        // Set id of PLC
+        if(conf["PLC"]["setting"][i]["id"].is_string()) {
+            std::string ss = conf["PLC"]["setting"][i]["id"];
+            listMachine[i].plcID = ss[0];
+        } else {
+            LOG_ERR << "Set up fail PLC/setting[" << i << "]/id";
+        }
+        // Set collection name
+        for (size_t j = 0; j < conf["PLC"]["setting"][i]["collection"].size(); j++) {
+            if(conf["PLC"]["setting"][i]["collection"][j].is_string()) {
+                listMachine[i].collection.push_back(conf["PLC"]["setting"][i]["collection"][j]);
+            } else {
+                LOG_ERR << "Set up fail PLC/setting/collection[" << j << "]";
+            }
+        }
     }
 
-    if( conf["plc_2"]["collection_day"].is_string() && conf["plc_2"]["collection_hour"].is_string() && conf["plc_2"]["collection_minute"].is_string() ) {
-        screw2.collection[0] = conf["plc_2"]["collection_day"];
-        screw2.collection[1] = conf["plc_2"]["collection_hour"];
-        screw2.collection[2] = conf["plc_2"]["collection_minute"];
-    } else {
-        LOG_ERR << "Set up fail collections for plc_2 !";
-    }
-    // Set id of PLC
-    if(conf["plc_1"]["id"].is_string()) {
-        std::string ss = conf["plc_1"]["id"];
-        screw1.plcID = ss[0];
-        LOG << screw1.plcID;
-    } else {
-        LOG_ERR << "Set up fail id for plc_1";
-    }
+    // for (auto & obj : ScrewMachine::screws) {
+    //     LOG << obj->plcID;
+    //     LOG << obj->collection[0];
+    //     LOG << obj->collection[1];
+    //     LOG << obj->collection[2];
+    // }
 
-    if(conf["plc_2"]["id"].is_string()) {
-        std::string ss = conf["plc_2"]["id"];
-        screw2.plcID = ss[0];
-        LOG << screw2.plcID;
-    } else {
-        LOG_ERR << "Set up fail id for plc_2";
-    }
+    // Step 3: Indentifying plc in network
     // Indentifying what plc is connecting to usb port.
     ScrewMachine::listPort = StreamPortUSB::listPort();     // get list of usb what is opening
-
-    LOG << "Indentifying the plc ...";
+    ScrewMachine::port.init();                              // setup mode to indentifyPLC 
     ScrewMachine::indentifyPLC();
 
-    for (auto & obj : ScrewMachine::screws) {
-        LOG << obj->collection[0];
-        LOG << obj->collection[1];
-        LOG << obj->collection[2];
+    // step 3: start working
+    for(auto & screw: ScrewMachine::screws) {
+        if(screw->stateConnected) { // assurance screw has connected successful.
+            LOG << "Starting work with PLC (" << screw->plcID <<")";
+            screw->begin();
+            // screw->plc.begin(screw->plc.port);
+            // check out what document in database is old. we will create a new doct with the right time (system time)
+            screw->checkOutOfDateDocument();
+        }
     }
-
-    // step 2: setup port whats connecting to plc
-    // screw1.plc.port = "/dev/ttyUSB0";
-    // screw2.plc.port = "/dev/ttyUSB1";
-    // // step 3: start working
-    // screw1.begin();
-    // screw2.begin();
-    //
-    // // step 4: check out what document in database is old. we will create a new doct with the right time (system time)
-    // screw1.checkOutOfDateDocument();
-    // screw2.checkOutOfDateDocument();
-
+    // this function will maintain port which is connected to plc.
+    ScrewMachine::checkingAlivePLC();
     // pause this main thread. Everything work in screw-machine.cc
     pause();
 

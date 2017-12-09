@@ -2,14 +2,14 @@
 
 namespace BONE {
 
-static bool flag_succeed= false;	// flag for query function know if query is succeed of not. 
+static bool flag_succeed= false;	// flag for query function know if query is succeed of not.
 // static stats_t stats= {0};			// count the total query command.
 
 // static void command_started (const mongoc_apm_command_started_t *event);	// show start time of command
 static void command_excuted (const mongoc_apm_command_succeeded_t *event); // it was called if the query command succeeded
 static void command_failed (const mongoc_apm_command_failed_t *event); // it was called if the query command failed
 
-// this function will turn on flag_succeed if "n"/"ok" : 1 exist in string s and 
+// this function will turn on flag_succeed if "n"/"ok" : 1 exist in string s and
 // if "n"/"ok" : 0 will turn off flag_succeed
 // the issue :  command_excuted was static function. and so turnFlag
 // must be static function.
@@ -79,11 +79,7 @@ MongoDatabase::MongoDatabase(const char *databaseName) {
 	LOG_VERB << "Mongo Database \""<< databaseName << "\" has connected successful !";
 }
 
-MongoDatabase::~MongoDatabase() {
-	mongoc_database_destroy (dtb);
-	mongoc_client_destroy (client);
-	mongoc_cleanup ();
-}
+MongoDatabase::~MongoDatabase() {}
 
 void MongoDatabase::begin(const char *databaseName) {
 	dbName = databaseName;
@@ -221,7 +217,7 @@ int MongoDatabase::update(const char *COLL_NAME, const char *key_select, const c
     for (unsigned int i = 0; i < length_arr; ++i)
     	BSON_APPEND_INT32(&child2, "", val_update[i]);
     bson_append_array_end (&child, &child2);
-    bson_append_document_end (update, &child);    
+    bson_append_document_end (update, &child);
 
     int res = updateQuick(COLL_NAME, key_select, val_select, update);
 	bson_destroy(update);
@@ -238,7 +234,7 @@ int MongoDatabase::update(const char *COLL_NAME, const char *key_select, const c
     for (unsigned int i = 0; i < val_update.size(); ++i)
     	BSON_APPEND_INT32(&child2, "", val_update[i]);
     bson_append_array_end (&child, &child2);
-    bson_append_document_end (update, &child);    
+    bson_append_document_end (update, &child);
 
     int res = updateQuick(COLL_NAME, key_select, val_select, update);
 	bson_destroy(update);
@@ -269,7 +265,7 @@ int MongoDatabase::updateQuick(const char *COLL_NAME, const char *key_select, in
 int MongoDatabase::updateQuick(const char *COLL_NAME, bson_t *query, bson_t *update) {
 	bson_error_t error;
 	db_collection *colt = mongoc_client_get_collection (client, dbName, COLL_NAME);
-	if( !mongoc_collection_update (colt, MONGOC_UPDATE_NONE, query, update, NULL, &error)) {	
+	if( !mongoc_collection_update (colt, MONGOC_UPDATE_NONE, query, update, NULL, &error)) {
 		mongoc_collection_destroy (colt);
 		return RET_FAILURE;
 	} else {
@@ -381,7 +377,7 @@ bool MongoDatabase::getValInt(const char *COLL_NAME, const char *field, const in
 	bson_iter_t fl;
 	bson_t *query = BCON_NEW(field, BCON_INT32(val_field));
 	bson_t bt = getDocument(COLL_NAME, query);
-	
+
 	if (bson_iter_init (&iter, &bt) &&
 	    bson_iter_find_descendant (&iter, key, &fl) &&
 	    BSON_ITER_HOLDS_INT32(&fl)) {
@@ -414,7 +410,7 @@ bool MongoDatabase::getValDatetime(const char *COLL_NAME, const char *field, con
 
 template <size_t rows, size_t cols>
 bool appendBsonArray(bson_t *doc, const char *key, int (&array)[rows][cols])
-{	
+{
 	bson_t child;
 	bson_append_array_begin(doc, key, -1, &child);
 	for (size_t i = 0; i < rows; ++i)

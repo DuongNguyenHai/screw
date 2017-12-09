@@ -1,22 +1,48 @@
 #include "usb-port.h"
 
-StreamPortUSB::StreamPortUSB() {};
+StreamPortUSB::StreamPortUSB() {
+    alive = false;
+    working = false;
+    alive_state_ = false;
+};
 StreamPortUSB::~StreamPortUSB() {};
+
+int StreamPortUSB::timeCheckingAlive = 1;
+
+void StreamPortUSB::init(int mode) {
+    rx_thread = new std::thread(&StreamPortUSB::autoReceive, this);
+    rx_thread->detach();
+    if(mode==CHECKING_ALIVE) {
+        checkingAlive(true);
+    }
+}
+
+void StreamPortUSB::checkingAlive(bool state) {
+    if(alive_state_ == false && state) {
+        alive_thread = new std::thread(&StreamPortUSB::howAlive, this);
+        alive_thread->detach();
+        alive_state_ = true;
+    } else {
+        alive_state_ = false;
+    }
+}
+
+void StreamPortUSB::begin(int fd) {
+    fd_ = fd;
+    begin();
+}
 
 bool StreamPortUSB::begin(const char dev[]) {
     rx_head = 0;
     rx_tail = 0;
-
-    fd_ = open(dev, O_RDWR | O_NOCTTY | O_NDELAY);
-    if (fd_ == -1) {
-        // perror("open_port: Unable to open /dev/ttyUSB0");
+    int fd = open(dev, O_RDWR | O_NOCTTY | O_NDELAY);
+    if (fd == -1) {
+        // open_port: Unable to open /dev/ttyUSB0
         return false;
     }
     else {
-        fcntl(fd_, F_SETFL, 0);
-        config(B9600, NONE);
-        rx_thread = new std::thread(&StreamPortUSB::autoReceive, this);
-        port = dev;
+        portName = dev;
+        begin(fd);
         return true;
     }
 }
@@ -25,8 +51,16 @@ bool StreamPortUSB::begin(std::string dev) {
     return begin(dev.c_str());
 }
 
-bool StreamPortUSB::begin() {
-    return begin(port.c_str());
+bool StreamPortUSB::beginPort() {
+    return begin(portName);
+}
+
+void StreamPortUSB::begin() {
+    fcntl(fd_, F_SETFL, 0);
+    config(B9600, NONE);
+    blocking(false);
+    alive = true;
+    working = true;
 }
 
 int StreamPortUSB::config(int speed, int parity) {
@@ -74,6 +108,25 @@ void StreamPortUSB::blocking(bool block) {
     if (tcsetattr (fd_, TCSANOW, &tty) != 0);
 }
 
+void StreamPortUSB::setFD(int fd) {
+    fd_ = fd;
+}
+
+int StreamPortUSB::getFD() {
+    return fd_;
+}
+
+void StreamPortUSB::end() {
+    // portName = "";
+    alive = false;
+    working = false;
+    close(fd_);
+}
+
+bool StreamPortUSB::stillAlive() {
+    return alive;
+}
+
 int StreamPortUSB::readBytes(char buff[], int n) {
     int ex = available();
     n = n > ex ? ex : n;
@@ -115,12 +168,28 @@ int StreamPortUSB::writeData(std::string buff) {
 
 void StreamPortUSB::autoReceive() {
     char rx[2];
-    while(1) {
-        int n = read(fd_, rx, 1);
-        if(n>0) {
-            buff_rx[rx_head] = rx[0];
-            rx_head = (++rx_head + BUFF_RX_MAX) % BUFF_RX_MAX;
+    while(true) {
+        if(working) {
+            int n = read(fd_, rx, 1);
+            if(n>0) {
+                buff_rx[rx_head] = rx[0];
+                rx_head = (++rx_head + BUFF_RX_MAX) % BUFF_RX_MAX;
+            }
         }
+        usleep(100);
+    }
+}
+
+void StreamPortUSB::howAlive() {
+    while(true) {
+        if(working && alive_state_) {
+            struct termios tty;
+            int st = tcgetattr(fd_, &tty);
+            if(st==-1) {
+                end();
+            }
+        }
+        sleep(timeCheckingAlive);
     }
 }
 

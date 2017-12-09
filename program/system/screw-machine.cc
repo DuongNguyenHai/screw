@@ -1,22 +1,35 @@
 #include "screw-machine.h"
 
 ScrewMachine::ScrewMachine() {
+	stateConnected = false;
+	working = false;
+	started = false;
 	screws.push_back(this);
 };
 ScrewMachine::~ScrewMachine() {};
 
+StreamPortUSB ScrewMachine::port;
 std::string ScrewMachine::dbName;
 std::vector<ScrewMachine *> ScrewMachine::screws;
 std::vector<std::string> ScrewMachine::listPort;
+std::thread *ScrewMachine::alivePLCThread_;
 
 bool ScrewMachine::begin() {
-
 	dtbase.begin(dbName.c_str());
-	if(plc.begin()==false) {
-		LOG_WARN << machineName << " -> " << "Cant not open \"" << plc.port << " \"port";
-	}
+	plc.init(CHECKING_ALIVE);
+	plc.begin(plc.portName);
 	cycle_ = new std::thread(&ScrewMachine::cycleNewDocument, this);
 	plcWaitDataThread_ = new std::thread(&ScrewMachine::waitDataPLC, this);
+	stateConnected = true;
+	working = true;
+	started = true;
+	return true;
+}
+
+bool ScrewMachine::restore() {
+	plc.begin(plc.portName);
+	stateConnected = true;
+	working = true;
 	return true;
 }
 
@@ -84,63 +97,65 @@ void ScrewMachine::checkOutOfDateDocument() {
 }
 
 void ScrewMachine::waitDataPLC() {
+	LOG << "Starting wait data from PLC";
     while(1)
     {
-    	int avai = plc.available();
+		if(stateConnected) {
+			int avai = plc.available();
+	    	if(avai > 0) {
+	    		char c = plc.readByte();
+		        LOG_VERB << c;
 
-    	if(avai > 0) {
-    		char c = plc.readByte();
-	        LOG_VERB << c;
-
-	        switch(c) {
-	        	// Draft failed
-	        	case 'B': {
-	        		dtbase.increaseDraftHand(collection[2].c_str(), HAND1, 1);
-	        		dtbase.increaseDraftHand(collection[1].c_str(), HAND1, 1);
-	        		dtbase.increaseDraftHand(collection[0].c_str(), HAND1, 1);
-	        		LOG << machineName << " -> " << "Draft 1 failed !";
-	        	} break;
-	        	case 'E': {
-	        		dtbase.increaseDraftHand(collection[2].c_str(), HAND2, 1);
-	        		dtbase.increaseDraftHand(collection[1].c_str(), HAND2, 1);
-	        		dtbase.increaseDraftHand(collection[0].c_str(), HAND2, 1);
-	        		LOG << machineName << " -> " << "Draft 2 failed !";
-	        	} break;
-	        	// Feeder failed
-	        	case 'C': {
-	        		dtbase.increaseElement(collection[2].c_str(), FEEDER, 1);
-	        		dtbase.increaseElement(collection[1].c_str(), FEEDER, 1);
-	        		dtbase.increaseElement(collection[0].c_str(), FEEDER, 1);
-	        		LOG << machineName << " -> " << "Feeder failed !";
-	        	} break;
-	        	// Fixture failed
-	        	case 'D': {
-	        		dtbase.increaseElement(collection[2].c_str(), FIXTURE, 1);
-	        		dtbase.increaseElement(collection[1].c_str(), FIXTURE, 1);
-	        		dtbase.increaseElement(collection[0].c_str(), FIXTURE, 1);
-	        		LOG << machineName << " -> " << "Fixture failed !";
-	        	} break;
-	        	// Total of screw times.
-	        	case 'T': {
-	        		dtbase.increaseElement(collection[2].c_str(), TOTAL, 16);
-	        		dtbase.increaseElement(collection[1].c_str(), TOTAL, 16);
-	        		dtbase.increaseElement(collection[0].c_str(), TOTAL, 16);
-	        		LOG_VERB << machineName << " -> " << "Screwed 16 times !";
-	        	} break;
-	        	default: {
-	        		// PLC send c in range [41, 56] and we have to convert to range [1, 16]
-	        		if(c>=41 && c<=56) {
-	        			dtbase.increaseElement(collection[2].c_str(), SCREW, 1);
-	        			dtbase.increaseElement(collection[1].c_str(), SCREW, 1);
-	        			dtbase.increaseElement(collection[0].c_str(), SCREW, 1);
-	        			dtbase.increaseScrewPosition(collection[2].c_str(), (int)c - 40, 1);
-	        			dtbase.increaseScrewPosition(collection[1].c_str(), (int)c - 40, 1);
-	        			dtbase.increaseScrewPosition(collection[0].c_str(), (int)c - 40, 1);
-	        			LOG_VERB << machineName << " -> " << "Screw position failed: " << (int)c - 40 << " !";
-	        		}
-	        	}
-	        }
-    	}
+		        switch(c) {
+		        	// Draft failed
+		        	case 'B': {
+		        		dtbase.increaseDraftHand(collection[2].c_str(), HAND1, 1);
+		        		dtbase.increaseDraftHand(collection[1].c_str(), HAND1, 1);
+		        		dtbase.increaseDraftHand(collection[0].c_str(), HAND1, 1);
+		        		LOG << machineName << " -> " << "Draft 1 failed !";
+		        	} break;
+		        	case 'E': {
+		        		dtbase.increaseDraftHand(collection[2].c_str(), HAND2, 1);
+		        		dtbase.increaseDraftHand(collection[1].c_str(), HAND2, 1);
+		        		dtbase.increaseDraftHand(collection[0].c_str(), HAND2, 1);
+		        		LOG << machineName << " -> " << "Draft 2 failed !";
+		        	} break;
+		        	// Feeder failed
+		        	case 'C': {
+		        		dtbase.increaseElement(collection[2].c_str(), FEEDER, 1);
+		        		dtbase.increaseElement(collection[1].c_str(), FEEDER, 1);
+		        		dtbase.increaseElement(collection[0].c_str(), FEEDER, 1);
+		        		LOG << machineName << " -> " << "Feeder failed !";
+		        	} break;
+		        	// Fixture failed
+		        	case 'D': {
+		        		dtbase.increaseElement(collection[2].c_str(), FIXTURE, 1);
+		        		dtbase.increaseElement(collection[1].c_str(), FIXTURE, 1);
+		        		dtbase.increaseElement(collection[0].c_str(), FIXTURE, 1);
+		        		LOG << machineName << " -> " << "Fixture failed !";
+		        	} break;
+		        	// Total of screw times.
+		        	case 'T': {
+		        		dtbase.increaseElement(collection[2].c_str(), TOTAL, 16);
+		        		dtbase.increaseElement(collection[1].c_str(), TOTAL, 16);
+		        		dtbase.increaseElement(collection[0].c_str(), TOTAL, 16);
+		        		LOG_VERB << machineName << " -> " << "Screwed 16 times !";
+		        	} break;
+		        	default: {
+		        		// PLC send c in range [41, 56] and we have to convert to range [1, 16]
+		        		if(c>=41 && c<=56) {
+		        			dtbase.increaseElement(collection[2].c_str(), SCREW, 1);
+		        			dtbase.increaseElement(collection[1].c_str(), SCREW, 1);
+		        			dtbase.increaseElement(collection[0].c_str(), SCREW, 1);
+		        			dtbase.increaseScrewPosition(collection[2].c_str(), (int)c - 40, 1);
+		        			dtbase.increaseScrewPosition(collection[1].c_str(), (int)c - 40, 1);
+		        			dtbase.increaseScrewPosition(collection[0].c_str(), (int)c - 40, 1);
+		        			LOG_VERB << machineName << " -> " << "Screw position failed: " << (int)c - 40 << " !";
+		        		}
+		        	}
+		        }
+	    	}
+		}
     	usleep(10000); // 10ms. longer time will reduce consumption of cpu in pi
     }
 }
@@ -149,17 +164,94 @@ void ScrewMachine::sayOk() {
 	plc.writeData('O');
 }
 
-void ScrewMachine::indentifyPLC() {
+size_t ScrewMachine::indentifyPLC() {
+	bool brk = false;
+	int count = 0;
+
 	for (size_t i = 0; i < listPort.size(); i++) {
-		StreamPortUSB port;
-		port.begin(listPort[i]);
-		LOG << listPort[i];
-		for (size_t j = 0; j < 10; j++) {
-			port.writeData('W');
-			usleep(30000);
-			if(port.available()) {
-				
+		bool foundPLC = false;
+		bool portExist = false;
+		// Checking port is in used
+		for(auto & screw: screws) {
+			if(screw->stateConnected) {
+				if(listPort[i].compare(screw->plc.portName)==0)
+					portExist = true;
 			}
 		}
+		if(portExist==false) {
+			port.begin(listPort[i]);
+			{
+				LOG << "Indentifying PLC on port: " << listPort[i];
+				for (size_t j = 0; j < 2; j++) {
+					port.writeData('W');
+					// usleep(30000);
+					sleep(3);
+					if(port.available()) {
+						char c = port.readByte();
+						for(auto & screw: screws) {
+							if(screw->stateConnected)
+								continue;
+							if(c == screw->plcID) {
+								screw->plc.portName = listPort[i];
+								LOG << "Detected PLC with id=\""<< screw->plcID <<"\" on \"" << listPort[i] << "\" port";
+								screw->stateConnected = true;
+								brk = true;
+								foundPLC = true;
+								count++;
+								break;
+							}
+						}
+					}
+					if(brk) {brk=false; break;}
+				}
+				if(!foundPLC) {
+					LOG_WARN << "Indentifying PLC on port: " << listPort[i] << " FAIL";
+				}
+			}
+			port.end();
+		}
     }
+	return count;
+}
+
+void ScrewMachine::checkingAlivePLC() {
+	alivePLCThread_ = new std::thread(ScrewMachine::isAlivePLC);
+}
+
+void ScrewMachine::isAlivePLC() {
+	while(true) {
+		bool somePLCfail = false;
+		for(auto & screw: screws) {
+			if(screw->plc.stillAlive()==false) {
+				somePLCfail = true;
+				screw->stateConnected = false;
+				screw->working = false;
+				// if(screw->plc.portName.length()>0) {
+				// 	LOG_WARN << "The port " << screw->plc.portName << " is closed";
+				// }
+				LOG_WARN << "PLC (" << screw->plcID <<") is not working";
+			}
+		}
+		if(somePLCfail) {
+			LOG_VERB << "Cheking all port again";
+			listPort = StreamPortUSB::listPort();
+			size_t count = indentifyPLC();
+			if(count>0) {
+				for(auto & screw: screws) {
+					if(screw->stateConnected==true && screw->working==false) {
+						if(screw->started==false) {
+							LOG << "Starting work with PLC (" << screw->plcID <<") on port " << screw->plc.portName;
+							screw->begin();
+							screw->checkOutOfDateDocument();
+						}
+						else {
+							LOG << "Restoring work with PLC (" << screw->plcID <<") on port " << screw->plc.portName;
+							screw->restore();
+						}
+					}
+				}
+			}
+		}
+		sleep(3);
+	}
 }

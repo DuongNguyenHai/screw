@@ -7,32 +7,19 @@
 		"database": "ScrewMachine"
 	},
 	"PLC": {
-		"number": 2,
-		"specification": [
+		"setting": [
 			{
 				"id": "a",
-				"collection_day": "ScrewByDay_1",
-				"collection_hour": "ScrewByHour_1",
-				"collection_minute": "ScrewByMinute_1"
+				"MAC": "aa-aa-aa-aa-aa",
+				"collection": ["ScrewByDay_1", "ScrewByHour_1", "ScrewByMinute_1"],
+				"autoIncrement": [86400, 3600, 900]
 			},
 			{
 				"id": "b",
-				"collection_day": "ScrewByDay_2",
-				"collection_hour": "ScrewByHour_2",
-				"collection_minute": "ScrewByMinute_2"
+				"MAC": "aa-aa-aa-aa-ab",
+				"collection": ["ScrewByDay_2", "ScrewByHour_2", "ScrewByMinute_2"],
+				"autoIncrement": [86400, 3600, 900]
 			}
 		]
-	},
-	"plc_1": {
-		"id": "a",
-		"collection_day": "ScrewByDay_1",
-		"collection_hour": "ScrewByHour_1",
-		"collection_minute": "ScrewByMinute_1"
-	},
-	"plc_2": {
-		"id": "b",
-		"collection_day": "ScrewByDay_2",
-		"collection_hour": "ScrewByHour_2",
-		"collection_minute": "ScrewByMinute_2"
 	}
 }

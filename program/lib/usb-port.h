@@ -7,13 +7,13 @@
 #ifndef USB_PORT_H
 #define USB_PORT_H
 
-#include <stdio.h>   /* Standard input/output definitions */
-#include <string.h>  /* String function definitions */
-#include <unistd.h>  /* UNIX standard function definitions */
-#include <fcntl.h>   /* File control definitions */
-#include <errno.h>   /* Error number definitions */
-#include <termios.h> /* POSIX terminal control definitions */
-#include <thread>         // std::thread, std::this_thread::sleep_for
+#include <stdio.h>   /* Standard input/output defbeginions */
+#include <string.h>  /* String function defbeginions */
+#include <unistd.h>  /* UNIX standard function defbeginions */
+#include <fcntl.h>   /* File control defbeginions */
+#include <errno.h>   /* Error number defbeginions */
+#include <termios.h> /* POSIX terminal control defbeginions */
+#include <thread>    // std::thread, std::this_thread::sleep_for
 #include <iostream>
 #include <vector>
 #include <atomic>		  // atomic variable
@@ -23,15 +23,23 @@
 #define NONE 0
 // baudrate : B9600 | B19200 | B57600 | B115200
 #define BUFF_RX_MAX 32
+#define CHECKING_ALIVE 1
 
 class StreamPortUSB
 {
 public:
 	StreamPortUSB();
 	~StreamPortUSB();
+	void begin();
+	void begin(int fd);
 	bool begin(const char dev[]);
 	bool begin(std::string dev);
-	bool begin();
+	bool beginPort();
+	void setFD(int fd);
+	int getFD();
+	void init(int mode = CHECKING_ALIVE);
+	void checkingAlive(bool state);
+	void end();
 	// set config: speed - baudrate, parity - 0/1 (0 mean is none, 1 is yes)
 	int config(int speed, int parity);
 	void blocking(bool block);
@@ -47,12 +55,19 @@ public:
 	int writeData(char buff[]);
 	int writeData(std::string buff);
 
+	std::atomic<bool> alive;
+	std::atomic<bool> working;
+	bool stillAlive();
+	static int timeCheckingAlive;
 	static std::vector<std::string> listPort();
-	std::string port;
+	std::string portName;
 	bool asynchronous; // true -> set work in asynchronous mode. false -> synchronous
 private:
 	std::thread *rx_thread;
+	std::thread *alive_thread;
+	std::atomic<bool> alive_state_;
 	void autoReceive();
+	void howAlive();
 	char buff_rx[BUFF_RX_MAX];
 	std::atomic<int> rx_head;
 	std::atomic<int> rx_tail;
