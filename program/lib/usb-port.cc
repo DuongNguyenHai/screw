@@ -1,29 +1,35 @@
 #include "usb-port.h"
 
+int StreamPortUSB::timeCheckingAlive = 1;   // second
+std::vector<StreamPortUSB *> StreamPortUSB::obj;
+std::thread *StreamPortUSB::alive_thread;
+bool StreamPortUSB::alive_mode_ = false;
+
 StreamPortUSB::StreamPortUSB() {
     alive = false;
     working = false;
     alive_state_ = false;
+    obj.push_back(this);
 };
 StreamPortUSB::~StreamPortUSB() {};
-
-int StreamPortUSB::timeCheckingAlive = 1;
 
 void StreamPortUSB::init(int mode) {
     rx_thread = new std::thread(&StreamPortUSB::autoReceive, this);
     rx_thread->detach();
-    if(mode==CHECKING_ALIVE) {
+    if(mode==CHECKING_ALIVE && alive_mode_==false) {
         checkingAlive(true);
     }
 }
 
 void StreamPortUSB::checkingAlive(bool state) {
-    if(alive_state_ == false && state) {
-        alive_thread = new std::thread(&StreamPortUSB::howAlive, this);
-        alive_thread->detach();
-        alive_state_ = true;
+    if(state) {
+        if(alive_mode_==false) {
+            alive_thread = new std::thread(&StreamPortUSB::checkIsAlive);
+            alive_thread->detach();
+            alive_mode_ = true;
+        }
     } else {
-        alive_state_ = false;
+        alive_mode_ = false;
     }
 }
 
@@ -61,6 +67,7 @@ void StreamPortUSB::begin() {
     blocking(false);
     alive = true;
     working = true;
+
 }
 
 int StreamPortUSB::config(int speed, int parity) {
@@ -75,21 +82,22 @@ int StreamPortUSB::config(int speed, int parity) {
     tty.c_cflag = (tty.c_cflag & ~CSIZE) | CS8;     // 8-bit chars
     // disable IGNBRK for mismatched speed tests; otherwise receive break
     // as \000 chars
-    tty.c_iflag &= ~IGNBRK;             // disable break processing
-    tty.c_lflag = 0;                    // no signaling chars, no echo,
-                                        // no canonical processing
-    tty.c_oflag = 0;                    // no remapping, no delays
-    tty.c_cc[VMIN]  = 0;                // read doesn't block
-    tty.c_cc[VTIME] = 5;                // 0.5 seconds read timeout
+    tty.c_iflag &= ~IGNBRK;                 // disable break processing
+    tty.c_lflag = 0;                        // no signaling chars, no echo,
+                                            // no canonical processing
+    tty.c_oflag = 0;                        // no remapping, no delays
+    tty.c_cc[VMIN]  = 0;                    // read doesn't block
+    tty.c_cc[VTIME] = 5;                    // 0.5 seconds read timeout
 
-    tty.c_iflag &= ~(IXON | IXOFF | IXANY); // shut off xon/xoff ctrl
+    tty.c_iflag &= ~(IXON | IXOFF | IXANY); // shut off xon/xoff ctrl - software flow control
 
     tty.c_cflag |= (CLOCAL | CREAD);        // ignore modem controls,
                                             // enable reading
     tty.c_cflag &= ~(PARENB | PARODD);      // shut off parity
     tty.c_cflag |= parity;
     tty.c_cflag &= ~CSTOPB;
-    tty.c_cflag &= ~CRTSCTS;
+    tty.c_cflag &= ~CRTSCTS;                // turn off hardware flow control
+    // tty.c_iflag &= ~(ICANON | ECHO | ECHOE | ISIG); // NON Cannonical mode is recommended.
 
     if (tcsetattr (fd_, TCSANOW, &tty) != 0)
         return -1;
@@ -180,16 +188,25 @@ void StreamPortUSB::autoReceive() {
     }
 }
 
-void StreamPortUSB::howAlive() {
+void StreamPortUSB::checkIsAlive() {
     while(true) {
-        if(working && alive_state_) {
-            struct termios tty;
-            int st = tcgetattr(fd_, &tty);
-            if(st==-1) {
-                end();
+        if(alive_mode_) {
+            for(auto & ob: obj) {
+                // std::cout << "fd_:" << ob->fd_ << std::endl;
+                if(ob->fd_!=-1 && ob->working) {
+                    int status;
+                    ioctl(ob->fd_, TIOCMGET, &status);
+                    std::cout << "ioctl(): " << status << std::endl;
+                    struct termios tty;
+                    int st = tcgetattr(ob->fd_, &tty);
+                    std::cout << "tcgetattr(): " << st << std::endl;
+                    if(st==-1) {
+                        ob->end();
+                    }
+                }
             }
+            sleep(timeCheckingAlive);
         }
-        sleep(timeCheckingAlive);
     }
 }
 
@@ -197,7 +214,7 @@ std::vector<std::string> StreamPortUSB::listPort() {
     std::string port;
     int fd;
     std::vector<std::string > list;
-    for(int i = 0; i < 256; ++i) {
+    for(int i = 0; i < MAX_DEVICE_PORT; ++i) {
         port.clear();
         port.append("/dev/ttyUSB");
         port.append(std::to_string(i));

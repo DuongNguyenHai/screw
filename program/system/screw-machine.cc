@@ -13,6 +13,7 @@ std::string ScrewMachine::dbName;
 std::vector<ScrewMachine *> ScrewMachine::screws;
 std::vector<std::string> ScrewMachine::listPort;
 std::thread *ScrewMachine::alivePLCThread_;
+uint32_t ScrewMachine::timeIndentifyPLC = 5;
 
 bool ScrewMachine::begin() {
 	dtbase.begin(dbName.c_str());
@@ -97,14 +98,13 @@ void ScrewMachine::checkOutOfDateDocument() {
 }
 
 void ScrewMachine::waitDataPLC() {
-	LOG << "Starting wait data from PLC";
-    while(1)
+    while(true)
     {
 		if(stateConnected) {
 			int avai = plc.available();
 	    	if(avai > 0) {
 	    		char c = plc.readByte();
-		        LOG_VERB << c;
+		        LOG_VERB << machineName << ":" << c;
 
 		        switch(c) {
 		        	// Draft failed
@@ -182,10 +182,9 @@ size_t ScrewMachine::indentifyPLC() {
 			port.begin(listPort[i]);
 			{
 				LOG << "Indentifying PLC on port: " << listPort[i];
-				for (size_t j = 0; j < 2; j++) {
+				for (size_t j = 0; j < 15; j++) {
 					port.writeData('W');
-					// usleep(30000);
-					sleep(3);
+					sleep(1);
 					if(port.available()) {
 						char c = port.readByte();
 						for(auto & screw: screws) {
@@ -194,6 +193,7 @@ size_t ScrewMachine::indentifyPLC() {
 							if(c == screw->plcID) {
 								screw->plc.portName = listPort[i];
 								LOG << "Detected PLC with id=\""<< screw->plcID <<"\" on \"" << listPort[i] << "\" port";
+								port.writeData('O');
 								screw->stateConnected = true;
 								brk = true;
 								foundPLC = true;
@@ -201,6 +201,8 @@ size_t ScrewMachine::indentifyPLC() {
 								break;
 							}
 						}
+					} else {
+						port.writeData('O');
 					}
 					if(brk) {brk=false; break;}
 				}
@@ -226,14 +228,11 @@ void ScrewMachine::isAlivePLC() {
 				somePLCfail = true;
 				screw->stateConnected = false;
 				screw->working = false;
-				// if(screw->plc.portName.length()>0) {
-				// 	LOG_WARN << "The port " << screw->plc.portName << " is closed";
-				// }
 				LOG_WARN << "PLC (" << screw->plcID <<") is not working";
 			}
 		}
 		if(somePLCfail) {
-			LOG_VERB << "Cheking all port again";
+			LOG_VERB << "Cheking all port again to identify PLC";
 			listPort = StreamPortUSB::listPort();
 			size_t count = indentifyPLC();
 			if(count>0) {
@@ -252,6 +251,6 @@ void ScrewMachine::isAlivePLC() {
 				}
 			}
 		}
-		sleep(3);
+		sleep(timeIndentifyPLC);
 	}
 }

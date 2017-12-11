@@ -15,7 +15,6 @@
 using namespace nlohmann;
 using namespace BONE;
 
-
 int main(int argc, char const *argv[])
 {
     json conf;              // configurattion
@@ -58,6 +57,12 @@ int main(int argc, char const *argv[])
         } else {
             LOG_ERR << "Set up fail PLC/setting[" << i << "]/id";
         }
+
+        // set machine name
+        if(conf["PLC"]["setting"][i]["machineName"].is_string()) {
+            listMachine[i].machineName = conf["PLC"]["setting"][i]["machineName"];
+        }
+
         // Set collection name
         for (size_t j = 0; j < conf["PLC"]["setting"][i]["collection"].size(); j++) {
             if(conf["PLC"]["setting"][i]["collection"][j].is_string()) {
@@ -68,17 +73,10 @@ int main(int argc, char const *argv[])
         }
     }
 
-    // for (auto & obj : ScrewMachine::screws) {
-    //     LOG << obj->plcID;
-    //     LOG << obj->collection[0];
-    //     LOG << obj->collection[1];
-    //     LOG << obj->collection[2];
-    // }
-
     // Step 3: Indentifying plc in network
     // Indentifying what plc is connecting to usb port.
     ScrewMachine::listPort = StreamPortUSB::listPort();     // get list of usb what is opening
-    ScrewMachine::port.init();                              // setup mode to indentifyPLC 
+    ScrewMachine::port.init();                              // setup mode to indentifyPLC
     ScrewMachine::indentifyPLC();
 
     // step 3: start working
@@ -86,7 +84,6 @@ int main(int argc, char const *argv[])
         if(screw->stateConnected) { // assurance screw has connected successful.
             LOG << "Starting work with PLC (" << screw->plcID <<")";
             screw->begin();
-            // screw->plc.begin(screw->plc.port);
             // check out what document in database is old. we will create a new doct with the right time (system time)
             screw->checkOutOfDateDocument();
         }

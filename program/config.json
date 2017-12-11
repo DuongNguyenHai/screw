@@ -2,7 +2,7 @@
 	"system": {
 		"PRINT_MONITOR": true,
 		"PRINT_FILE": true,
-		"PRINT_FILE_MONTH": false,
+		"PRINT_FILE_MONTH": true,
 		"DEBUG_LEVEL": 3,
 		"database": "ScrewMachine"
 	},
@@ -11,12 +11,14 @@
 			{
 				"id": "a",
 				"MAC": "aa-aa-aa-aa-aa",
+				"machineName": "Screw machine 1",
 				"collection": ["ScrewByDay_1", "ScrewByHour_1", "ScrewByMinute_1"],
 				"autoIncrement": [86400, 3600, 900]
 			},
 			{
 				"id": "b",
 				"MAC": "aa-aa-aa-aa-ab",
+				"machineName": "Screw machine 2",
 				"collection": ["ScrewByDay_2", "ScrewByHour_2", "ScrewByMinute_2"],
 				"autoIncrement": [86400, 3600, 900]
 			}

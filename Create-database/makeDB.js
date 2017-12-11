@@ -27,7 +27,7 @@ function hour2second(hour) {
 	return hour*3600;
 }
 
-var totalDay = 32;
+var totalDay = 0;
 var totalHour = totalDay*24;
 var totalMinute = totalHour*4;
 

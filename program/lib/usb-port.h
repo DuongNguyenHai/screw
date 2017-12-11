@@ -13,6 +13,7 @@
 #include <fcntl.h>   /* File control defbeginions */
 #include <errno.h>   /* Error number defbeginions */
 #include <termios.h> /* POSIX terminal control defbeginions */
+#include <sys/ioctl.h>
 #include <thread>    // std::thread, std::this_thread::sleep_for
 #include <iostream>
 #include <vector>
@@ -22,6 +23,7 @@
 #define NON_BLOCKING false
 #define NONE 0
 // baudrate : B9600 | B19200 | B57600 | B115200
+#define MAX_DEVICE_PORT 32
 #define BUFF_RX_MAX 32
 #define CHECKING_ALIVE 1
 
@@ -38,7 +40,7 @@ public:
 	void setFD(int fd);
 	int getFD();
 	void init(int mode = CHECKING_ALIVE);
-	void checkingAlive(bool state);
+	static void checkingAlive(bool state);
 	void end();
 	// set config: speed - baudrate, parity - 0/1 (0 mean is none, 1 is yes)
 	int config(int speed, int parity);
@@ -55,19 +57,21 @@ public:
 	int writeData(char buff[]);
 	int writeData(std::string buff);
 
-	std::atomic<bool> alive;
+	std::atomic<bool> alive;		// status of connection: alive or dead
 	std::atomic<bool> working;
 	bool stillAlive();
 	static int timeCheckingAlive;
 	static std::vector<std::string> listPort();
-	std::string portName;
-	bool asynchronous; // true -> set work in asynchronous mode. false -> synchronous
+	std::string portName;		// port name: /dev/ttyUSB*
+	bool asynchronous; 			// true -> set work in asynchronous mode. false -> synchronous
 private:
 	std::thread *rx_thread;
-	std::thread *alive_thread;
+	static std::thread *alive_thread;
 	std::atomic<bool> alive_state_;
+	static std::vector<StreamPortUSB *> obj;
 	void autoReceive();
-	void howAlive();
+	static bool alive_mode_;
+	static void checkIsAlive();
 	char buff_rx[BUFF_RX_MAX];
 	std::atomic<int> rx_head;
 	std::atomic<int> rx_tail;

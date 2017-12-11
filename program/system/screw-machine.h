@@ -44,6 +44,7 @@ public:
 	std::vector<std::string> collection;
 	std::string machineName;
 	char plcID;						// id of PLC
+	static uint32_t timeIndentifyPLC;
 	static std::vector<ScrewMachine *> screws;
 	static std::vector<ScrewMachine *> screwsDisconnect;
 private:

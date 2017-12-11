@@ -7726,3 +7726,367 @@ VERBOSE(updateQuick():base/bone-database.cc:272)[17:38:27-12/09/17] [update -> S
 LOG(waitDataPLC():system/screw-machine.cc:121)[17:38:27-12/09/17]  -> Draft 2 failed !
 WARNING(isAlivePLC():system/screw-machine.cc:232)[17:38:29-12/09/17] PLC (b) is not working
 VERBOSE(isAlivePLC():system/screw-machine.cc:236)[17:38:29-12/09/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:15:43-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:15:49-12/11/17] Indentifying PLC on port: /dev/ttyUSB0 FAIL
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:15:49-12/11/17] Indentifying PLC on port: /dev/ttyUSB1
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:15:55-12/11/17] Indentifying PLC on port: /dev/ttyUSB1 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:15:55-12/11/17] PLC (a) is not working
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:15:55-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:15:55-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:15:55-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:16:01-12/11/17] Indentifying PLC on port: /dev/ttyUSB0 FAIL
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:16:01-12/11/17] Indentifying PLC on port: /dev/ttyUSB1
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:16:07-12/11/17] Indentifying PLC on port: /dev/ttyUSB1 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:16:17-12/11/17] PLC (a) is not working
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:16:17-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:16:17-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:16:18-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:16:24-12/11/17] Indentifying PLC on port: /dev/ttyUSB0 FAIL
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:16:24-12/11/17] Indentifying PLC on port: /dev/ttyUSB1
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:16:30-12/11/17] Indentifying PLC on port: /dev/ttyUSB1 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:16:40-12/11/17] PLC (a) is not working
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:16:40-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:16:40-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:16:40-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:16:46-12/11/17] Indentifying PLC on port: /dev/ttyUSB0 FAIL
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:16:46-12/11/17] Indentifying PLC on port: /dev/ttyUSB1
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:16:52-12/11/17] Indentifying PLC on port: /dev/ttyUSB1 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:17:02-12/11/17] PLC (a) is not working
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:17:02-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:17:02-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:17:02-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+LOG(indentifyPLC():system/screw-machine.cc:198)[13:17:05-12/11/17] Detected PLC with id="a" on "/dev/ttyUSB0" port
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:17:05-12/11/17] Indentifying PLC on port: /dev/ttyUSB1
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:17:11-12/11/17] Indentifying PLC on port: /dev/ttyUSB1 FAIL
+LOG(isAlivePLC():system/screw-machine.cc:245)[13:17:11-12/11/17] Starting work with PLC (a) on port /dev/ttyUSB0
+WARNING(command_excuted():base/bone-database.cc:36)[13:17:11-12/11/17] Command ping missed:
+{ "ok" : 1.0 }
+VERBOSE(begin():base/bone-database.cc:109)[13:17:11-12/11/17] Mongo Database "ScrewMachine" has connected successful !
+LOG(waitDataPLC():system/screw-machine.cc:102)[13:17:11-12/11/17] Starting wait data from PLC
+VERBOSE(checkOutOfDateDocument():system/screw-machine.cc:91)[13:17:11-12/11/17]  -> (old document) Create a new document on ScrewByHour_1
+WARNING(command_excuted():base/bone-database.cc:36)[13:17:11-12/11/17] Command count missed:
+{ "n" : 778.0, "ok" : 1.0 }
+VERBOSE(insertQuick():base/bone-database.cc:121)[13:17:11-12/11/17] [insert -> ScrewByHour_1] { "_id" : 777, "date" : { "$date" : 1512973031000 } }
+VERBOSE(checkOutOfDateDocument():system/screw-machine.cc:96)[13:17:11-12/11/17]  -> (old document) Create a new document on ScrewByMinute_1
+WARNING(command_excuted():base/bone-database.cc:36)[13:17:11-12/11/17] Command count missed:
+{ "n" : 3093.0, "ok" : 1.0 }
+VERBOSE(insertQuick():base/bone-database.cc:121)[13:17:11-12/11/17] [insert -> ScrewByMinute_1] { "_id" : 3092, "date" : { "$date" : 1512973031000 } }
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:17:21-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:17:21-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:17:21-12/11/17] Indentifying PLC on port: /dev/ttyUSB1
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:17:24-12/11/17] T
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:17:24-12/11/17] [update -> ScrewByMinute_1] { "_id" : 3092 },{ "$set" : { "total" : 16 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:17:24-12/11/17] [update -> ScrewByHour_1] { "_id" : 777 },{ "$set" : { "total" : 16 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:17:24-12/11/17] [update -> ScrewByDay_1] { "_id" : 31 },{ "$set" : { "total" : 40768 } }
+VERBOSE(waitDataPLC():system/screw-machine.cc:144)[13:17:24-12/11/17]  -> Screwed 16 times !
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:17:27-12/11/17] Indentifying PLC on port: /dev/ttyUSB1 FAIL
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:17:28-12/11/17] B
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:17:28-12/11/17] [update -> ScrewByMinute_1] { "_id" : 3092 },{ "$set" : { "draft.1" : 1 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:17:28-12/11/17] [update -> ScrewByHour_1] { "_id" : 777 },{ "$set" : { "draft.1" : 1 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:17:28-12/11/17] [update -> ScrewByDay_1] { "_id" : 31 },{ "$set" : { "draft.1" : 39 } }
+LOG(waitDataPLC():system/screw-machine.cc:117)[13:17:28-12/11/17]  -> Draft 1 failed !
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:17:37-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:17:37-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:17:37-12/11/17] Indentifying PLC on port: /dev/ttyUSB1
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:17:40-12/11/17] C
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:17:40-12/11/17] [update -> ScrewByMinute_1] { "_id" : 3092 },{ "$set" : { "feeder" : 1 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:17:40-12/11/17] [update -> ScrewByHour_1] { "_id" : 777 },{ "$set" : { "feeder" : 1 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:17:40-12/11/17] [update -> ScrewByDay_1] { "_id" : 31 },{ "$set" : { "feeder" : 31 } }
+LOG(waitDataPLC():system/screw-machine.cc:130)[13:17:40-12/11/17]  -> Feeder failed !
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:17:43-12/11/17] Indentifying PLC on port: /dev/ttyUSB1 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:17:53-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:17:53-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:17:53-12/11/17] Indentifying PLC on port: /dev/ttyUSB1
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:17:59-12/11/17] Indentifying PLC on port: /dev/ttyUSB1 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:18:09-12/11/17] PLC (a) is not working
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:18:09-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:18:09-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:18:09-12/11/17] Indentifying PLC on port: /dev/ttyUSB1
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:18:15-12/11/17] Indentifying PLC on port: /dev/ttyUSB1 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:18:25-12/11/17] PLC (a) is not working
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:18:25-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:18:25-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:18:25-12/11/17] Indentifying PLC on port: /dev/ttyUSB1
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:18:31-12/11/17] Indentifying PLC on port: /dev/ttyUSB1 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:18:41-12/11/17] PLC (a) is not working
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:18:41-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:18:41-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:18:41-12/11/17] Indentifying PLC on port: /dev/ttyUSB1
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:18:47-12/11/17] Indentifying PLC on port: /dev/ttyUSB1 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:18:57-12/11/17] PLC (a) is not working
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:18:57-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:18:57-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:18:58-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:19:04-12/11/17] Indentifying PLC on port: /dev/ttyUSB0 FAIL
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:19:04-12/11/17] Indentifying PLC on port: /dev/ttyUSB1
+LOG(indentifyPLC():system/screw-machine.cc:198)[13:19:10-12/11/17] Detected PLC with id="a" on "/dev/ttyUSB1" port
+LOG(isAlivePLC():system/screw-machine.cc:250)[13:19:10-12/11/17] Restoring work with PLC (a) on port /dev/ttyUSB1
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:19:19-12/11/17] C
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:19:19-12/11/17] [update -> ScrewByMinute_1] { "_id" : 3092 },{ "$set" : { "feeder" : 2 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:19:19-12/11/17] [update -> ScrewByHour_1] { "_id" : 777 },{ "$set" : { "feeder" : 2 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:19:19-12/11/17] [update -> ScrewByDay_1] { "_id" : 31 },{ "$set" : { "feeder" : 32 } }
+LOG(waitDataPLC():system/screw-machine.cc:130)[13:19:19-12/11/17]  -> Feeder failed !
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:19:20-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:19:20-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:19:20-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:19:22-12/11/17] B
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:19:22-12/11/17] [update -> ScrewByMinute_1] { "_id" : 3092 },{ "$set" : { "draft.1" : 2 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:19:22-12/11/17] [update -> ScrewByHour_1] { "_id" : 777 },{ "$set" : { "draft.1" : 2 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:19:22-12/11/17] [update -> ScrewByDay_1] { "_id" : 31 },{ "$set" : { "draft.1" : 40 } }
+LOG(waitDataPLC():system/screw-machine.cc:117)[13:19:22-12/11/17]  -> Draft 1 failed !
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:19:26-12/11/17] Indentifying PLC on port: /dev/ttyUSB0 FAIL
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:19:29-12/11/17] T
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:19:29-12/11/17] [update -> ScrewByMinute_1] { "_id" : 3092 },{ "$set" : { "total" : 32 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:19:29-12/11/17] [update -> ScrewByHour_1] { "_id" : 777 },{ "$set" : { "total" : 32 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:19:29-12/11/17] [update -> ScrewByDay_1] { "_id" : 31 },{ "$set" : { "total" : 40784 } }
+VERBOSE(waitDataPLC():system/screw-machine.cc:144)[13:19:29-12/11/17]  -> Screwed 16 times !
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:19:36-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:19:36-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:19:36-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:19:42-12/11/17] Indentifying PLC on port: /dev/ttyUSB0 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:19:52-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:19:52-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:19:53-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:19:59-12/11/17] Indentifying PLC on port: /dev/ttyUSB0 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:20:09-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:20:09-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:20:09-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:20:15-12/11/17] Indentifying PLC on port: /dev/ttyUSB0 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:20:25-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:20:25-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:20:25-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:20:31-12/11/17] Indentifying PLC on port: /dev/ttyUSB0 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:20:41-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:20:41-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:20:41-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:20:47-12/11/17] Indentifying PLC on port: /dev/ttyUSB0 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:20:57-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:20:57-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:20:58-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+LOG(indentifyPLC():system/screw-machine.cc:198)[13:21:01-12/11/17] Detected PLC with id="b" on "/dev/ttyUSB0" port
+LOG(isAlivePLC():system/screw-machine.cc:245)[13:21:01-12/11/17] Starting work with PLC (b) on port /dev/ttyUSB0
+WARNING(command_excuted():base/bone-database.cc:36)[13:21:01-12/11/17] Command ping missed:
+{ "ok" : 1.0 }
+VERBOSE(begin():base/bone-database.cc:109)[13:21:01-12/11/17] Mongo Database "ScrewMachine" has connected successful !
+LOG(waitDataPLC():system/screw-machine.cc:102)[13:21:01-12/11/17] Starting wait data from PLC
+VERBOSE(checkOutOfDateDocument():system/screw-machine.cc:91)[13:21:01-12/11/17]  -> (old document) Create a new document on ScrewByHour_2
+WARNING(command_excuted():base/bone-database.cc:36)[13:21:01-12/11/17] Command count missed:
+{ "n" : 772.0, "ok" : 1.0 }
+VERBOSE(insertQuick():base/bone-database.cc:121)[13:21:01-12/11/17] [insert -> ScrewByHour_2] { "_id" : 771, "date" : { "$date" : 1512973261000 } }
+VERBOSE(checkOutOfDateDocument():system/screw-machine.cc:96)[13:21:01-12/11/17]  -> (old document) Create a new document on ScrewByMinute_2
+WARNING(command_excuted():base/bone-database.cc:36)[13:21:01-12/11/17] Command count missed:
+{ "n" : 3078.0, "ok" : 1.0 }
+VERBOSE(insertQuick():base/bone-database.cc:121)[13:21:01-12/11/17] [insert -> ScrewByMinute_2] { "_id" : 3077, "date" : { "$date" : 1512973261000 } }
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:21:04-12/11/17] T
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:21:04-12/11/17] [update -> ScrewByMinute_2] { "_id" : 3077 },{ "$set" : { "total" : 16 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:21:04-12/11/17] [update -> ScrewByHour_2] { "_id" : 771 },{ "$set" : { "total" : 16 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:21:04-12/11/17] [update -> ScrewByDay_2] { "_id" : 31 },{ "$set" : { "total" : 42880 } }
+VERBOSE(waitDataPLC():system/screw-machine.cc:144)[13:21:04-12/11/17]  -> Screwed 16 times !
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:21:11-12/11/17] B
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:21:11-12/11/17] [update -> ScrewByMinute_2] { "_id" : 3077 },{ "$set" : { "draft.1" : 1 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:21:11-12/11/17] [update -> ScrewByHour_2] { "_id" : 771 },{ "$set" : { "draft.1" : 1 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:21:11-12/11/17] [update -> ScrewByDay_2] { "_id" : 31 },{ "$set" : { "draft.1" : 20 } }
+LOG(waitDataPLC():system/screw-machine.cc:117)[13:21:11-12/11/17]  -> Draft 1 failed !
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:21:15-12/11/17] C
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:21:15-12/11/17] [update -> ScrewByMinute_2] { "_id" : 3077 },{ "$set" : { "feeder" : 1 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:21:15-12/11/17] [update -> ScrewByHour_2] { "_id" : 771 },{ "$set" : { "feeder" : 1 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:21:15-12/11/17] [update -> ScrewByDay_2] { "_id" : 31 },{ "$set" : { "feeder" : 36 } }
+LOG(waitDataPLC():system/screw-machine.cc:130)[13:21:15-12/11/17]  -> Feeder failed !
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:21:20-12/11/17] T
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:21:20-12/11/17] [update -> ScrewByMinute_2] { "_id" : 3077 },{ "$set" : { "total" : 32 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:21:20-12/11/17] [update -> ScrewByHour_2] { "_id" : 771 },{ "$set" : { "total" : 32 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:21:20-12/11/17] [update -> ScrewByDay_2] { "_id" : 31 },{ "$set" : { "total" : 42896 } }
+VERBOSE(waitDataPLC():system/screw-machine.cc:144)[13:21:20-12/11/17]  -> Screwed 16 times !
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:21:25-12/11/17] E
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:21:25-12/11/17] [update -> ScrewByMinute_2] { "_id" : 3077 },{ "$set" : { "draft.2" : 1 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:21:25-12/11/17] [update -> ScrewByHour_2] { "_id" : 771 },{ "$set" : { "draft.2" : 1 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:21:25-12/11/17] [update -> ScrewByDay_2] { "_id" : 31 },{ "$set" : { "draft.2" : 18 } }
+LOG(waitDataPLC():system/screw-machine.cc:123)[13:21:25-12/11/17]  -> Draft 2 failed !
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:21:29-12/11/17] B
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:21:29-12/11/17] [update -> ScrewByMinute_2] { "_id" : 3077 },{ "$set" : { "draft.1" : 2 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:21:29-12/11/17] [update -> ScrewByHour_2] { "_id" : 771 },{ "$set" : { "draft.1" : 2 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:21:29-12/11/17] [update -> ScrewByDay_2] { "_id" : 31 },{ "$set" : { "draft.1" : 21 } }
+LOG(waitDataPLC():system/screw-machine.cc:117)[13:21:29-12/11/17]  -> Draft 1 failed !
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:21:41-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:21:41-12/11/17] Cheking all port again
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:21:51-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:21:51-12/11/17] Cheking all port again
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:22:01-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:22:01-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:22:01-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:22:07-12/11/17] Indentifying PLC on port: /dev/ttyUSB0 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:22:17-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:22:17-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:22:17-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+LOG(indentifyPLC():system/screw-machine.cc:198)[13:22:20-12/11/17] Detected PLC with id="b" on "/dev/ttyUSB0" port
+LOG(isAlivePLC():system/screw-machine.cc:250)[13:22:20-12/11/17] Restoring work with PLC (b) on port /dev/ttyUSB0
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:22:27-12/11/17] B
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:22:27-12/11/17] [update -> ScrewByMinute_2] { "_id" : 3077 },{ "$set" : { "draft.1" : 3 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:22:27-12/11/17] [update -> ScrewByHour_2] { "_id" : 771 },{ "$set" : { "draft.1" : 3 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:22:27-12/11/17] [update -> ScrewByDay_2] { "_id" : 31 },{ "$set" : { "draft.1" : 22 } }
+LOG(waitDataPLC():system/screw-machine.cc:117)[13:22:27-12/11/17]  -> Draft 1 failed !
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:22:45-12/11/17] B
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:22:45-12/11/17] [update -> ScrewByMinute_1] { "_id" : 3092 },{ "$set" : { "draft.1" : 3 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:22:45-12/11/17] [update -> ScrewByHour_1] { "_id" : 777 },{ "$set" : { "draft.1" : 3 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:22:45-12/11/17] [update -> ScrewByDay_1] { "_id" : 31 },{ "$set" : { "draft.1" : 41 } }
+LOG(waitDataPLC():system/screw-machine.cc:117)[13:22:45-12/11/17]  -> Draft 1 failed !
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:22:48-12/11/17] E
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:22:48-12/11/17] [update -> ScrewByMinute_1] { "_id" : 3092 },{ "$set" : { "draft.2" : 1 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:22:48-12/11/17] [update -> ScrewByHour_1] { "_id" : 777 },{ "$set" : { "draft.2" : 1 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:22:48-12/11/17] [update -> ScrewByDay_1] { "_id" : 31 },{ "$set" : { "draft.2" : 18 } }
+LOG(waitDataPLC():system/screw-machine.cc:123)[13:22:48-12/11/17]  -> Draft 2 failed !
+VERBOSE(cycleNewDocument():system/screw-machine.cc:66)[13:30:00-12/11/17]  -> Create a new document on ScrewByMinute_2
+WARNING(command_excuted():base/bone-database.cc:36)[13:30:00-12/11/17] Command count missed:
+{ "n" : 3079.0, "ok" : 1.0 }
+VERBOSE(insertQuick():base/bone-database.cc:121)[13:30:00-12/11/17] [insert -> ScrewByMinute_2] { "_id" : 3078, "date" : { "$date" : 1512973800000 } }
+VERBOSE(cycleNewDocument():system/screw-machine.cc:66)[13:30:00-12/11/17]  -> Create a new document on ScrewByMinute_1
+WARNING(command_excuted():base/bone-database.cc:36)[13:30:00-12/11/17] Command count missed:
+{ "n" : 3094.0, "ok" : 1.0 }
+VERBOSE(insertQuick():base/bone-database.cc:121)[13:30:00-12/11/17] [insert -> ScrewByMinute_1] { "_id" : 3093, "date" : { "$date" : 1512973800000 } }
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:33:56-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:34:02-12/11/17] Indentifying PLC on port: /dev/ttyUSB0 FAIL
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:34:02-12/11/17] Indentifying PLC on port: /dev/ttyUSB1
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:34:08-12/11/17] Indentifying PLC on port: /dev/ttyUSB1 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:34:08-12/11/17] PLC (a) is not working
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:34:08-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:34:08-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:34:08-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:34:14-12/11/17] Indentifying PLC on port: /dev/ttyUSB0 FAIL
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:34:14-12/11/17] Indentifying PLC on port: /dev/ttyUSB1
+LOG(indentifyPLC():system/screw-machine.cc:198)[13:34:17-12/11/17] Detected PLC with id="b" on "/dev/ttyUSB1" port
+LOG(isAlivePLC():system/screw-machine.cc:245)[13:34:17-12/11/17] Starting work with PLC (b) on port /dev/ttyUSB1
+WARNING(command_excuted():base/bone-database.cc:36)[13:34:17-12/11/17] Command ping missed:
+{ "ok" : 1.0 }
+VERBOSE(begin():base/bone-database.cc:109)[13:34:17-12/11/17] Mongo Database "ScrewMachine" has connected successful !
+LOG(waitDataPLC():system/screw-machine.cc:102)[13:34:17-12/11/17] Starting wait data from PLC
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:34:24-12/11/17] E
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:34:24-12/11/17] [update -> ScrewByMinute_2] { "_id" : 3078 },{ "$set" : { "draft.2" : 1 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:34:24-12/11/17] [update -> ScrewByHour_2] { "_id" : 771 },{ "$set" : { "draft.2" : 2 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:34:24-12/11/17] [update -> ScrewByDay_2] { "_id" : 31 },{ "$set" : { "draft.2" : 19 } }
+LOG(waitDataPLC():system/screw-machine.cc:123)[13:34:24-12/11/17]  -> Draft 2 failed !
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:34:26-12/11/17] B
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:34:26-12/11/17] [update -> ScrewByMinute_2] { "_id" : 3078 },{ "$set" : { "draft.1" : 1 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:34:26-12/11/17] [update -> ScrewByHour_2] { "_id" : 771 },{ "$set" : { "draft.1" : 4 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:34:26-12/11/17] [update -> ScrewByDay_2] { "_id" : 31 },{ "$set" : { "draft.1" : 23 } }
+LOG(waitDataPLC():system/screw-machine.cc:117)[13:34:26-12/11/17]  -> Draft 1 failed !
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:34:27-12/11/17] PLC (a) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:34:27-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:34:28-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:34:28-12/11/17] E
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:34:28-12/11/17] [update -> ScrewByMinute_2] { "_id" : 3078 },{ "$set" : { "draft.2" : 2 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:34:28-12/11/17] [update -> ScrewByHour_2] { "_id" : 771 },{ "$set" : { "draft.2" : 3 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:34:28-12/11/17] [update -> ScrewByDay_2] { "_id" : 31 },{ "$set" : { "draft.2" : 20 } }
+LOG(waitDataPLC():system/screw-machine.cc:123)[13:34:28-12/11/17]  -> Draft 2 failed !
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:34:34-12/11/17] Indentifying PLC on port: /dev/ttyUSB0 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:34:44-12/11/17] PLC (a) is not working
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:34:44-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:34:44-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:34:44-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:34:50-12/11/17] Indentifying PLC on port: /dev/ttyUSB0 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:35:00-12/11/17] PLC (a) is not working
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:35:00-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:35:00-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:35:00-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:35:06-12/11/17] Indentifying PLC on port: /dev/ttyUSB0 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:35:16-12/11/17] PLC (a) is not working
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:35:16-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:35:16-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:35:17-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:35:23-12/11/17] Indentifying PLC on port: /dev/ttyUSB0 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:35:33-12/11/17] PLC (a) is not working
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:35:33-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:35:33-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:35:33-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:35:39-12/11/17] Indentifying PLC on port: /dev/ttyUSB0 FAIL
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:35:39-12/11/17] Indentifying PLC on port: /dev/ttyUSB1
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:35:45-12/11/17] Indentifying PLC on port: /dev/ttyUSB1 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:35:55-12/11/17] PLC (a) is not working
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:35:55-12/11/17] PLC (b) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:35:55-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:35:55-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:36:01-12/11/17] Indentifying PLC on port: /dev/ttyUSB0 FAIL
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:36:01-12/11/17] Indentifying PLC on port: /dev/ttyUSB1
+LOG(indentifyPLC():system/screw-machine.cc:198)[13:36:04-12/11/17] Detected PLC with id="b" on "/dev/ttyUSB1" port
+LOG(isAlivePLC():system/screw-machine.cc:250)[13:36:04-12/11/17] Restoring work with PLC (b) on port /dev/ttyUSB1
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:36:06-12/11/17] E
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:36:06-12/11/17] [update -> ScrewByMinute_2] { "_id" : 3078 },{ "$set" : { "draft.2" : 3 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:36:06-12/11/17] [update -> ScrewByHour_2] { "_id" : 771 },{ "$set" : { "draft.2" : 4 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:36:06-12/11/17] [update -> ScrewByDay_2] { "_id" : 31 },{ "$set" : { "draft.2" : 21 } }
+LOG(waitDataPLC():system/screw-machine.cc:123)[13:36:06-12/11/17]  -> Draft 2 failed !
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:36:08-12/11/17] E
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:36:08-12/11/17] [update -> ScrewByMinute_2] { "_id" : 3078 },{ "$set" : { "draft.2" : 4 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:36:08-12/11/17] [update -> ScrewByHour_2] { "_id" : 771 },{ "$set" : { "draft.2" : 5 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:36:08-12/11/17] [update -> ScrewByDay_2] { "_id" : 31 },{ "$set" : { "draft.2" : 22 } }
+LOG(waitDataPLC():system/screw-machine.cc:123)[13:36:08-12/11/17]  -> Draft 2 failed !
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:36:14-12/11/17] PLC (a) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:36:14-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:36:14-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:36:20-12/11/17] Indentifying PLC on port: /dev/ttyUSB0 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:36:30-12/11/17] PLC (a) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:36:30-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:36:31-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:36:37-12/11/17] Indentifying PLC on port: /dev/ttyUSB0 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:36:47-12/11/17] PLC (a) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:36:47-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:36:47-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+LOG(indentifyPLC():system/screw-machine.cc:198)[13:36:53-12/11/17] Detected PLC with id="a" on "/dev/ttyUSB0" port
+LOG(isAlivePLC():system/screw-machine.cc:245)[13:36:53-12/11/17] Starting work with PLC (a) on port /dev/ttyUSB0
+WARNING(command_excuted():base/bone-database.cc:36)[13:36:53-12/11/17] Command ping missed:
+{ "ok" : 1.0 }
+VERBOSE(begin():base/bone-database.cc:109)[13:36:53-12/11/17] Mongo Database "ScrewMachine" has connected successful !
+LOG(waitDataPLC():system/screw-machine.cc:102)[13:36:53-12/11/17] Starting wait data from PLC
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:36:57-12/11/17] E
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:36:57-12/11/17] [update -> ScrewByMinute_1] { "_id" : 3093 },{ "$set" : { "draft.2" : 1 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:36:57-12/11/17] [update -> ScrewByHour_1] { "_id" : 777 },{ "$set" : { "draft.2" : 2 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:36:57-12/11/17] [update -> ScrewByDay_1] { "_id" : 31 },{ "$set" : { "draft.2" : 19 } }
+LOG(waitDataPLC():system/screw-machine.cc:123)[13:36:57-12/11/17]  -> Draft 2 failed !
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:37:01-12/11/17] E
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:37:01-12/11/17] [update -> ScrewByMinute_1] { "_id" : 3093 },{ "$set" : { "draft.2" : 2 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:37:01-12/11/17] [update -> ScrewByHour_1] { "_id" : 777 },{ "$set" : { "draft.2" : 3 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:37:01-12/11/17] [update -> ScrewByDay_1] { "_id" : 31 },{ "$set" : { "draft.2" : 20 } }
+LOG(waitDataPLC():system/screw-machine.cc:123)[13:37:01-12/11/17]  -> Draft 2 failed !
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:37:06-12/11/17] B
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:37:06-12/11/17] [update -> ScrewByMinute_1] { "_id" : 3093 },{ "$set" : { "draft.1" : 1 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:37:06-12/11/17] [update -> ScrewByHour_1] { "_id" : 777 },{ "$set" : { "draft.1" : 4 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:37:06-12/11/17] [update -> ScrewByDay_1] { "_id" : 31 },{ "$set" : { "draft.1" : 42 } }
+LOG(waitDataPLC():system/screw-machine.cc:117)[13:37:06-12/11/17]  -> Draft 1 failed !
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:37:10-12/11/17] C
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:37:10-12/11/17] [update -> ScrewByMinute_1] { "_id" : 3093 },{ "$set" : { "feeder" : 1 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:37:10-12/11/17] [update -> ScrewByHour_1] { "_id" : 777 },{ "$set" : { "feeder" : 3 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:37:10-12/11/17] [update -> ScrewByDay_1] { "_id" : 31 },{ "$set" : { "feeder" : 33 } }
+LOG(waitDataPLC():system/screw-machine.cc:130)[13:37:10-12/11/17]  -> Feeder failed !
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:37:23-12/11/17] PLC (a) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:37:23-12/11/17] Cheking all port again
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:37:26-12/11/17] B
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:37:26-12/11/17] [update -> ScrewByMinute_2] { "_id" : 3078 },{ "$set" : { "draft.1" : 2 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:37:26-12/11/17] [update -> ScrewByHour_2] { "_id" : 771 },{ "$set" : { "draft.1" : 5 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:37:26-12/11/17] [update -> ScrewByDay_2] { "_id" : 31 },{ "$set" : { "draft.1" : 24 } }
+LOG(waitDataPLC():system/screw-machine.cc:117)[13:37:26-12/11/17]  -> Draft 1 failed !
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:37:29-12/11/17] B
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:37:29-12/11/17] [update -> ScrewByMinute_2] { "_id" : 3078 },{ "$set" : { "draft.1" : 3 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:37:29-12/11/17] [update -> ScrewByHour_2] { "_id" : 771 },{ "$set" : { "draft.1" : 6 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:37:29-12/11/17] [update -> ScrewByDay_2] { "_id" : 31 },{ "$set" : { "draft.1" : 25 } }
+LOG(waitDataPLC():system/screw-machine.cc:117)[13:37:29-12/11/17]  -> Draft 1 failed !
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:37:33-12/11/17] PLC (a) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:37:33-12/11/17] Cheking all port again
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:37:43-12/11/17] PLC (a) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:37:43-12/11/17] Cheking all port again
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:37:53-12/11/17] PLC (a) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:37:53-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:37:53-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+WARNING(indentifyPLC():system/screw-machine.cc:210)[13:37:59-12/11/17] Indentifying PLC on port: /dev/ttyUSB0 FAIL
+WARNING(isAlivePLC():system/screw-machine.cc:234)[13:38:09-12/11/17] PLC (a) is not working
+VERBOSE(isAlivePLC():system/screw-machine.cc:238)[13:38:09-12/11/17] Cheking all port again
+LOG(indentifyPLC():system/screw-machine.cc:186)[13:38:10-12/11/17] Indentifying PLC on port: /dev/ttyUSB0
+LOG(indentifyPLC():system/screw-machine.cc:198)[13:38:13-12/11/17] Detected PLC with id="a" on "/dev/ttyUSB0" port
+LOG(isAlivePLC():system/screw-machine.cc:250)[13:38:13-12/11/17] Restoring work with PLC (a) on port /dev/ttyUSB0
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:38:17-12/11/17] C
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:38:17-12/11/17] [update -> ScrewByMinute_1] { "_id" : 3093 },{ "$set" : { "feeder" : 2 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:38:17-12/11/17] [update -> ScrewByHour_1] { "_id" : 777 },{ "$set" : { "feeder" : 4 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:38:17-12/11/17] [update -> ScrewByDay_1] { "_id" : 31 },{ "$set" : { "feeder" : 34 } }
+LOG(waitDataPLC():system/screw-machine.cc:130)[13:38:17-12/11/17]  -> Feeder failed !
+VERBOSE(waitDataPLC():system/screw-machine.cc:109)[13:38:19-12/11/17] B
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:38:19-12/11/17] [update -> ScrewByMinute_1] { "_id" : 3093 },{ "$set" : { "draft.1" : 2 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:38:19-12/11/17] [update -> ScrewByHour_1] { "_id" : 777 },{ "$set" : { "draft.1" : 5 } }
+VERBOSE(updateQuick():base/bone-database.cc:272)[13:38:19-12/11/17] [update -> ScrewByDay_1] { "_id" : 31 },{ "$set" : { "draft.1" : 43 } }
+LOG(waitDataPLC():system/screw-machine.cc:117)[13:38:19-12/11/17]  -> Draft 1 failed !
