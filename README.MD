@@ -1,6 +1,6 @@
 ## Author Nguyen Hai Duong
-#####	Date Dec 6, 2017
-#####	Version 1.0
+#####	Dec 16, 2017
+#####	Version 1.2
 
 The main program communicate with multi PLC by USB(raspberry) <-> UART(PLC). PLC will automacticlly send error codes and total of screwing to the program. The program after received codes/total will save that codes/total into mongodb database.
 
