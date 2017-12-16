@@ -59,9 +59,11 @@ public:
 	int update(const char *COLL_NAME, const char *key_select, const char *val_select, const char *key_update, double val_update);
 	int update(const char *COLL_NAME, const char *key_select, const char *val_select, const char *key_update, int val_update[], unsigned int length_arr);
 	int update(const char *COLL_NAME, const char *key_select, const char *val_select, const char *key_update, std::vector<int> val_update);
+	int update(const char *COLL_NAME, const char *key_select, int val_select, const char *key_update, std::vector<int> val_update);
 
 	int update(const char *COLL_NAME, const char *key_select, int val_select, const char *key_update, int32_t val_update);
 	int update(const char *COLL_NAME, const char *key_select, int val_select, const char *key_update, int64_t val_update);
+	int update(const char *COLL_NAME, const char *key_select, int val_select, const char *key_update, double val_update);
 
 	int remove(const char *COLL_NAME, const bson_t *query); // delete only one data
 	int32_t totalDocuments(const char *COLL_NAME); // count total documents in a specific colletion					// Display stats
@@ -72,7 +74,7 @@ public:
 	bool getValInt(const char *COLL_NAME, const char *field, const char *val_field, const char * key, int32_t &res);
 	bool getValInt(const char *COLL_NAME, const char *field, const int val_field, const char * key, int32_t &res);
 	bool getValDatetime(const char *COLL_NAME, const char *field, const int val_field, const char * key, int64_t &res);
-	
+
 	// Append array field to bson
 	template <size_t rows, size_t cols>
 	bool appendBsonArray(bson_t *doc, const char *key, int (&array)[rows][cols]);
@@ -89,6 +91,6 @@ private:
 };
 
 } // end of namspace TREE
- 
+
 
 #endif

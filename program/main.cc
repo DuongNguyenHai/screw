@@ -71,6 +71,16 @@ int main(int argc, char const *argv[])
                 LOG_ERR << "Set up fail PLC/setting/collection[" << j << "]";
             }
         }
+
+        // Setup application
+        // enable/disable measuring pressure of vacuum
+        if(conf["PLC"]["setting"][i]["appPressureVacuum"].is_boolean()) {
+            listMachine[i].appPressureVacuum(conf["PLC"]["setting"][i]["appPressureVacuum"]);
+            if(conf["PLC"]["setting"][i]["pressureVacuumSchedule"].is_array()) {
+                std::vector<int> v = conf["PLC"]["setting"][i]["pressureVacuumSchedule"];
+                listMachine[i].pressureSchedule = v;
+            }
+        }
     }
 
     // Step 3: Indentifying plc in network

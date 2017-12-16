@@ -12,7 +12,7 @@ LDFLAGS += -lpthread
 INCLUDES += -I$(DIRLIB) -I$(DIRLIB_BASE) -I$(DIRSYS)
 LIBS += `pkg-config --cflags --libs libmongoc-1.0`
 
-SOURCES = $(DIRLIB_BASE)/bone-log.cc $(DIRLIB_BASE)/bone-database.cc $(DIRLIB)/database.cc $(DIRSYS)/screw-machine.cc $(DIRLIB)/usb-port.cc main.cc
+SOURCES = $(DIRLIB_BASE)/bone-log.cc $(DIRLIB_BASE)/bone-database.cc $(DIRLIB_BASE)/Wire.cpp $(DIRLIB)/database.cc $(DIRLIB)/Adafruit_ADS1015.cc $(DIRSYS)/screw-machine.cc $(DIRLIB)/usb-port.cc $(DIRSYS)/ADC-converter.cc main.cc
 
 OBJECTS = $(addsuffix .o, $(basename $(SOURCES)))
 OBJECTS_d = $(addsuffix .d, $(basename $(SOURCES)))

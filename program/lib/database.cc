@@ -61,3 +61,10 @@ int64_t Database::lastDateTime(const char *COLL) {
 	}
 	return lastTime;
 }
+
+int Database::insertPressureVacuum(const char* COLL, float data) {
+	int last = 0;
+	MongoDatabase::getValInt(COLL, "_id", "id", "total", last);
+	last = (last - 1) < 0 ? 0 : last -1; 	// the first document indexed from 0, so need to abstract 1
+	return MongoDatabase::update(COLL, "_id", last, VACUUM, data);
+}

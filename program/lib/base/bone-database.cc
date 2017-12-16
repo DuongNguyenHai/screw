@@ -14,6 +14,7 @@ static void command_failed (const mongoc_apm_command_failed_t *event); // it was
 // the issue :  command_excuted was static function. and so turnFlag
 // must be static function.
 static bool turnFlag(char *s) {
+	// LOG << s[strrchr(s,'}')-s-2];
 	if(s[strrchr(s,'}')-s-2]-'0')	// get value of "ok" : 1
 		flag_succeed = true;
 	else
@@ -241,8 +242,32 @@ int MongoDatabase::update(const char *COLL_NAME, const char *key_select, const c
 	return res;
 }
 
+int MongoDatabase::update(const char *COLL_NAME, const char *key_select, int val_select, const char *key_update, std::vector<int> val_update) {
+	bson_t child;
+    bson_t child2;
+    bson_t *update = bson_new ();
+
+    BSON_APPEND_DOCUMENT_BEGIN (update, "$set", &child);
+    BSON_APPEND_ARRAY_BEGIN (&child, key_update, &child2);
+    for (unsigned int i = 0; i < val_update.size(); ++i)
+    	BSON_APPEND_INT32(&child2, "", val_update[i]);
+    bson_append_array_end (&child, &child2);
+    bson_append_document_end (update, &child);
+
+    int res = updateQuick(COLL_NAME, key_select, val_select, update);
+	bson_destroy(update);
+	return res;
+}
+
 int MongoDatabase::update(const char *COLL_NAME, const char *key_select, int32_t val_select, const char *key_update, int32_t val_update) {
 	bson_t *update = BCON_NEW ("$set", "{", key_update, BCON_INT32(val_update), "}");
+	int res = updateQuick(COLL_NAME, key_select, val_select, update);
+	bson_destroy (update);
+	return res;
+}
+
+int MongoDatabase::update(const char *COLL_NAME, const char *key_select, int32_t val_select, const char *key_update, double val_update) {
+	bson_t *update = BCON_NEW ("$set", "{", key_update, BCON_DOUBLE(val_update), "}");
 	int res = updateQuick(COLL_NAME, key_select, val_select, update);
 	bson_destroy (update);
 	return res;

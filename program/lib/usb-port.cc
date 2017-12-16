@@ -174,6 +174,15 @@ int StreamPortUSB::writeData(std::string buff) {
     return write(fd_, buff.c_str(), buff.length());
 }
 
+int StreamPortUSB::writeDate3Times(char c, int tm) {
+    size_t count = 0;
+    for (size_t i = 0; i < 3; i++) {
+        count += writeData(c);
+        usleep(tm);
+    }
+    return count;
+}
+
 void StreamPortUSB::autoReceive() {
     char rx[2];
     while(true) {
@@ -192,14 +201,11 @@ void StreamPortUSB::checkIsAlive() {
     while(true) {
         if(alive_mode_) {
             for(auto & ob: obj) {
-                // std::cout << "fd_:" << ob->fd_ << std::endl;
                 if(ob->fd_!=-1 && ob->working) {
                     int status;
                     ioctl(ob->fd_, TIOCMGET, &status);
-                    std::cout << "ioctl(): " << status << std::endl;
                     struct termios tty;
                     int st = tcgetattr(ob->fd_, &tty);
-                    std::cout << "tcgetattr(): " << st << std::endl;
                     if(st==-1) {
                         ob->end();
                     }

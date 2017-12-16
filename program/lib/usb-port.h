@@ -57,6 +57,8 @@ public:
 	int writeData(char buff[]);
 	int writeData(std::string buff);
 
+	int writeDate3Times(char c, int tm = 100000);
+
 	std::atomic<bool> alive;		// status of connection: alive or dead
 	std::atomic<bool> working;
 	bool stillAlive();

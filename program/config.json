@@ -1,9 +1,9 @@
 {
 	"system": {
-		"PRINT_MONITOR": true,
+		"PRINT_MONITOR": false,
 		"PRINT_FILE": true,
 		"PRINT_FILE_MONTH": true,
-		"DEBUG_LEVEL": 3,
+		"DEBUG_LEVEL": 2,
 		"database": "ScrewMachine"
 	},
 	"PLC": {
@@ -13,14 +13,18 @@
 				"MAC": "aa-aa-aa-aa-aa",
 				"machineName": "Screw machine 1",
 				"collection": ["ScrewByDay_1", "ScrewByHour_1", "ScrewByMinute_1"],
-				"autoIncrement": [86400, 3600, 900]
+				"autoIncrement": [86400, 3600, 900],
+				"appPressureVacuum": false,
+				"pressureVacuumSchedule": [32700]
 			},
 			{
 				"id": "b",
 				"MAC": "aa-aa-aa-aa-ab",
 				"machineName": "Screw machine 2",
 				"collection": ["ScrewByDay_2", "ScrewByHour_2", "ScrewByMinute_2"],
-				"autoIncrement": [86400, 3600, 900]
+				"autoIncrement": [86400, 3600, 900],
+				"appPressureVacuum": true,
+				"pressureVacuumSchedule": [32700]
 			}
 		]
 	}

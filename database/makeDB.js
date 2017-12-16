@@ -12,22 +12,22 @@ if(db)
 	db.dropDatabase();
 
 var GMT = 0;
+var day = 7*24*3600*1000;
+var localDate = getTime();
 
-var localDate = getTime(GMT);
-
-function getTime(GMT) {
-	return new Date( new Date().getTime() + GMT * 3600 * 1000);
+function getTime() {
+	return new Date( new Date().getTime() + GMT * 3600 * 1000 - day);
 }
 
-function getTimeExpand(GMT, expand) {
-	return new Date( new Date().getTime() + GMT * 3600 * 1000 + 1000*expand);
+function getTimeExpand(tm, expand) {
+	return new Date( tm.getTime() + GMT * 3600 * 1000 + 1000*expand);
 }
 
 function hour2second(hour) {
 	return hour*3600;
 }
 
-var totalDay = 0;
+var totalDay = 2;
 var totalHour = totalDay*24;
 var totalMinute = totalHour*4;
 
@@ -36,7 +36,7 @@ db[ScrewByHour_1].insert({_id: "id", total: NumberInt(totalHour), infor: "Log ev
 db[ScrewByMinute_1].insert({_id: "id", total: NumberInt(totalMinute), infor: "Log everything by 15 minute of machine 1", date: localDate});
 
 db[ScrewByDay_2].insert({_id: "id", total: NumberInt(totalDay), infor: "log everything by day of machine 2", date: localDate});
-db[ScrewByHour_2].insert({_id: "id", total: NumberInt(totalHour), infor: "Log everything by hour of machine 2", date: localDate});
+db[ScrewByHour_2].insert({_id: "id", total: NumberInt(totalHour-2), infor: "Log everything by hour of machine 2", date: localDate});
 db[ScrewByMinute_2].insert({_id: "id", total: NumberInt(totalMinute), infor: "Log everything by 15 minute of machine 2", date: localDate});
 
 
@@ -74,8 +74,10 @@ for (var i = 0; i < totalDay; i++) {
 			9: NumberInt(9), 10: NumberInt(10), 11: NumberInt(11), 12: NumberInt(12),
 			13: NumberInt(13), 14: NumberInt(14), 15: NumberInt(15), 16: NumberInt(16)
 		},
-		date:  getTimeExpand(GMT, 86400*i)
+		vaccumPressure: [-45],
+		date:  getTimeExpand(localDate, 86400*i)
 	});
+
 }
 
 // ScrewByHour_1
@@ -112,7 +114,7 @@ for (var i = 0; i < totalHour; i++) {
 			9: NumberInt(9), 10: NumberInt(10), 11: NumberInt(4), 12: NumberInt(12),
 			13: NumberInt(13), 14: NumberInt(16), 15: NumberInt(15), 16: NumberInt(14)
 		},
-		date:  getTimeExpand(GMT, 3600*i)
+		date:  getTimeExpand(localDate, 3600*i)
 	});
 }
 
@@ -151,7 +153,7 @@ for (var i = 0; i < totalMinute; i++) {
 			9: NumberInt(9), 10: NumberInt(10), 11: NumberInt(11), 12: NumberInt(12),
 			13: NumberInt(13), 14: NumberInt(14), 15: NumberInt(15), 16: NumberInt(16)
 		},
-		date: getTimeExpand(GMT, 900*i)
+		date: getTimeExpand(localDate, 900*i)
 	});
 }
 
@@ -189,7 +191,7 @@ for (var i = 0; i < totalDay; i++) {
 			9: NumberInt(9), 10: NumberInt(10), 11: NumberInt(11), 12: NumberInt(12),
 			13: NumberInt(13), 14: NumberInt(14), 15: NumberInt(15), 16: NumberInt(16)
 		},
-		date:  getTimeExpand(GMT, 86400*i)
+		date:  getTimeExpand(localDate, 86400*i)
 	});
 }
 
@@ -227,7 +229,7 @@ for (var i = 0; i < totalHour; i++) {
 			9: NumberInt(9), 10: NumberInt(10), 11: NumberInt(4), 12: NumberInt(12),
 			13: NumberInt(13), 14: NumberInt(16), 15: NumberInt(15), 16: NumberInt(14)
 		},
-		date:  getTimeExpand(GMT, 3600*i)
+		date:  getTimeExpand(localDate, 3600*i)
 	});
 }
 
@@ -266,6 +268,6 @@ for (var i = 0; i < totalMinute; i++) {
 			9: NumberInt(9), 10: NumberInt(10), 11: NumberInt(11), 12: NumberInt(12),
 			13: NumberInt(13), 14: NumberInt(14), 15: NumberInt(15), 16: NumberInt(16)
 		},
-		date: getTimeExpand(GMT, 900*i)
+		date: getTimeExpand(localDate, 900*i)
 	});
 }
