@@ -15,7 +15,7 @@
 				"collection": ["ScrewByDay_1", "ScrewByHour_1", "ScrewByMinute_1"],
 				"autoIncrement": [86400, 3600, 900],
 				"appPressureVacuum": false,
-				"pressureVacuumSchedule": [32700]
+				"pressureVacuumSchedule": [8700, 33900, 51900, 77100]
 			},
 			{
 				"id": "b",
@@ -24,7 +24,7 @@
 				"collection": ["ScrewByDay_2", "ScrewByHour_2", "ScrewByMinute_2"],
 				"autoIncrement": [86400, 3600, 900],
 				"appPressureVacuum": true,
-				"pressureVacuumSchedule": [32700]
+				"pressureVacuumSchedule": [62900,63000,63100,63200,63300,63400,63500,63600,63700,63800,63900,64000,64100,64200]
 			}
 		]
 	}

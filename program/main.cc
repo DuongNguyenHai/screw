@@ -92,7 +92,7 @@ int main(int argc, char const *argv[])
     // step 3: start working
     for(auto & screw: ScrewMachine::screws) {
         if(screw->stateConnected) { // assurance screw has connected successful.
-            LOG << "Starting work with PLC (" << screw->plcID <<")";
+            LOG << "Starting work with PLC (" << screw->plcID <<") on port " << screw->plc.portName;
             screw->begin();
             // check out what document in database is old. we will create a new doct with the right time (system time)
             screw->checkOutOfDateDocument();

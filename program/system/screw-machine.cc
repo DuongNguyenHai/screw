@@ -270,6 +270,7 @@ void ScrewMachine::appPressureVacuum(bool state) {
 void ScrewMachine::handlePressureVacuum(struct tm curr) {
 	// ready to measure
 	if(readyToMeasure_) {
+		usleep(1500000);	// delay 1.5s for pressure of vacuum get stable
 		float avr = 0;
 		float data[5];
 		for (size_t k = 0; k < 5; k++) {
@@ -278,8 +279,7 @@ void ScrewMachine::handlePressureVacuum(struct tm curr) {
 		}
 		avr = (float)(avr/5);
 		LOG << machineName << ": Pressure of vacuum on avarage: " << avr;
-		dtbase.insertPressureVacuum(collection[0].c_str(), avr);
-		usleep(100000);
+		dtbase.insertPressureVacuum(collection[1].c_str(), avr);
 		plc.writeDate3Times('o');
 		readyToMeasure_ = false;
 	}
@@ -292,7 +292,7 @@ void ScrewMachine::handlePressureVacuum(struct tm curr) {
 				for (size_t k = 0; k < 3; k++) {
 					if(readyToMeasure_) break;
 					plc.writeData('s');
-					usleep(300000);
+					usleep(200000);
 				}
 				break;
 			}
@@ -312,8 +312,8 @@ void ScrewMachine::scheduleWorking() {
 		cycleNewDocument(curr);
 
 		// application: measure pressure of vacuum
-		// if(vacuum_enable_)
-		// 	handlePressureVacuum(curr);
+		if(vacuum_enable_)
+			handlePressureVacuum(curr);
 
 		sleep(1);
 	}

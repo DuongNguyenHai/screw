@@ -66,7 +66,8 @@ public:
 	int update(const char *COLL_NAME, const char *key_select, int val_select, const char *key_update, double val_update);
 
 	int remove(const char *COLL_NAME, const bson_t *query); // delete only one data
-	int32_t totalDocuments(const char *COLL_NAME); // count total documents in a specific colletion					// Display stats
+	int32_t totalDocuments(const char *COLL_NAME); // count total documents in a specific colletion
+	int32_t countDocuments(const char *COLL_NAME);				// Display stats
 	std::string getJsonDocument(const char *COLL_NAME, char *jsonSelecColl); // return json document
 	std::string getJsonOneDocument(const char *COLL_NAME, bson_t *query); // // return json document
 	bson_t getDocument(const char *COLL_NAME, bson_t *query);	// return bson_t document

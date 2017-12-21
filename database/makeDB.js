@@ -27,7 +27,7 @@ function hour2second(hour) {
 	return hour*3600;
 }
 
-var totalDay = 2;
+var totalDay = 7;
 var totalHour = totalDay*24;
 var totalMinute = totalHour*4;
 
@@ -57,7 +57,6 @@ db[ScrewByMinute_2].insert({_id: "id", total: NumberInt(totalMinute), infor: "Lo
 for (var i = 0; i < totalDay; i++) {
 	var tt = (2500 + (Math.floor(Math.random()*500) - 250)) * 16;
 	var fl = (50 + (Math.floor(Math.random()*30) - 15));
-
 	db[ScrewByDay_1].insert({
 		_id: NumberInt(i),
 		total: NumberInt(tt),
@@ -74,7 +73,7 @@ for (var i = 0; i < totalDay; i++) {
 			9: NumberInt(9), 10: NumberInt(10), 11: NumberInt(11), 12: NumberInt(12),
 			13: NumberInt(13), 14: NumberInt(14), 15: NumberInt(15), 16: NumberInt(16)
 		},
-		vaccumPressure: [-45],
+
 		date:  getTimeExpand(localDate, 86400*i)
 	});
 
@@ -97,7 +96,7 @@ for (var i = 0; i < totalDay; i++) {
 for (var i = 0; i < totalHour; i++) {
 	var tt = (250 + (Math.floor(Math.random()*50) - 24)) * 16;
 	var fl = (50 + (Math.floor(Math.random()*30) - 15));
-
+	var vc = -(45 + (Math.floor(Math.random()*6) - 3));
 	db[ScrewByHour_1].insert({
 		_id: NumberInt(i),
 		total: NumberInt(tt),
@@ -114,6 +113,7 @@ for (var i = 0; i < totalHour; i++) {
 			9: NumberInt(9), 10: NumberInt(10), 11: NumberInt(4), 12: NumberInt(12),
 			13: NumberInt(13), 14: NumberInt(16), 15: NumberInt(15), 16: NumberInt(14)
 		},
+		vaccumPressure: vc,
 		date:  getTimeExpand(localDate, 3600*i)
 	});
 }
@@ -174,7 +174,6 @@ for (var i = 0; i < totalMinute; i++) {
 for (var i = 0; i < totalDay; i++) {
 	var tt = (2500 + (Math.floor(Math.random()*500) - 250)) * 16;
 	var fl = (50 + (Math.floor(Math.random()*30) - 15));
-
 	db[ScrewByDay_2].insert({
 		_id: NumberInt(i),
 		total: NumberInt(tt),
@@ -212,7 +211,7 @@ for (var i = 0; i < totalDay; i++) {
 for (var i = 0; i < totalHour; i++) {
 	var tt = (250 + (Math.floor(Math.random()*50) - 24)) * 16;
 	var fl = (50 + (Math.floor(Math.random()*30) - 15));
-
+	var vc = -(45 + (Math.floor(Math.random()*6) - 3));
 	db[ScrewByHour_2].insert({
 		_id: NumberInt(i),
 		total: NumberInt(tt),
@@ -229,6 +228,7 @@ for (var i = 0; i < totalHour; i++) {
 			9: NumberInt(9), 10: NumberInt(10), 11: NumberInt(4), 12: NumberInt(12),
 			13: NumberInt(13), 14: NumberInt(16), 15: NumberInt(15), 16: NumberInt(14)
 		},
+		vaccumPressure: vc,
 		date:  getTimeExpand(localDate, 3600*i)
 	});
 }

@@ -115,7 +115,10 @@ int MongoDatabase::insertQuick(const char *COLL_NAME, const bson_t *insert) {
 	db_collection *colt = mongoc_client_get_collection (client, dbName, COLL_NAME);
 	bson_error_t error;
 	if( !mongoc_collection_insert (colt, MONGOC_INSERT_NONE, insert, NULL, &error)) {
+		char *json = bson_as_json(insert, NULL);
+		LOG_VERB << "[insert -> "<< COLL_NAME <<"] " << json;
 		LOG_WARN << error.message;
+		bson_free(json);
 		return RET_FAILURE;
 	} else {
 		char *json = bson_as_json(insert, NULL);
@@ -151,7 +154,8 @@ int MongoDatabase::getNextSequence(db_collection *colt) {
 int MongoDatabase::insertInOrder(const char *COLL_NAME, const bson_t *insert) {
 
 	db_collection *colt = mongoc_client_get_collection (client, dbName, COLL_NAME);
-	int total = getNextSequence(colt);  // I dont wanna count the first document (its information for collection).
+	int32_t total = totalDocuments(COLL_NAME);
+	// int total = getNextSequence(colt);  // I dont wanna count the first document (its information for collection).
 	if(total==-1) {
 		mongoc_collection_destroy(colt);
 		return RET_FAILURE;
@@ -159,6 +163,9 @@ int MongoDatabase::insertInOrder(const char *COLL_NAME, const bson_t *insert) {
 	bson_t *command = BCON_NEW ("_id", BCON_INT32(total));
 	bson_concat(command, insert);
 	int res = insertQuick(COLL_NAME, command);
+	if(res==RET_SUCCESS) {
+		update(COLL_NAME, "_id", "id", "total", total+1);
+	}
 	bson_destroy(command);
 	mongoc_collection_destroy(colt);
 
@@ -294,7 +301,11 @@ int MongoDatabase::updateQuick(const char *COLL_NAME, bson_t *query, bson_t *upd
 		mongoc_collection_destroy (colt);
 		return RET_FAILURE;
 	} else {
-		LOG_VERB << "[update -> "<< COLL_NAME <<"] " << bson_as_json (query, NULL) << "," << bson_as_json(update, NULL);
+		char *qr = bson_as_json(query, NULL);
+		char *ud = bson_as_json(update, NULL);
+		LOG_VERB << "[update -> "<< COLL_NAME <<"] " << qr << "," << ud;
+		bson_free(qr);
+		bson_free(ud);
 		mongoc_collection_destroy (colt);
 		return RET_SUCCESS;
 	}
@@ -315,7 +326,15 @@ int MongoDatabase::remove(const char *COLL_NAME, const bson_t *query){
     }
 }
 
-int32_t MongoDatabase::totalDocuments (const char *COLL_NAME) {
+int32_t MongoDatabase::totalDocuments(const char *COLL_NAME) {
+   	int32_t total;
+	bool rs = getValInt(COLL_NAME, "_id", "id", "total", total);
+	if(rs==true)
+		return total;
+	else return -1;
+}
+
+int32_t MongoDatabase::countDocuments(const char *COLL_NAME) {
 
    	int64_t count;
    	bson_error_t error;
@@ -347,7 +366,6 @@ std::string MongoDatabase::getJsonDocument(const char *COLL_NAME, char *jsonSele
 	}
 	return getJsonOneDocument(COLL_NAME, query);
 }
-
 
 std::string MongoDatabase::getJsonOneDocument(const char *COLL_NAME, bson_t *query) {
 
