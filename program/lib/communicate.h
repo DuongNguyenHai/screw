@@ -8,25 +8,12 @@
 #include <unistd.h>
 #include <errno.h>
 #include <sys/socket.h>
-#include "config.h"
-#include "TCP-IP.h"
-#include "bone-log.h"
+#include <string>
+#include "beU-TCP.h"
+#include "beU-log.h"
 
-namespace BONE {
+namespace BeU {
 
-// Test passed: June 31 2017
-class Socket {
-public:
-	Socket();
-	~Socket();
-	void creatSocket(unsigned short port);
-	int sendMessage(const char*msg);
-	int readMessage(char *msg);
-
-private:
-	int servSock_;
-	int clntSock_;
-};
 
 }
 #endif

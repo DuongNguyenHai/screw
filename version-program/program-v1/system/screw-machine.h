@@ -18,9 +18,7 @@
 #include "database.h"
 #include "usb-port.h"
 #include "ADC-converter.h"
-#include "screw-machine.h"
-
-using namespace BeU;
+using namespace BONE;
 
 #define TURN_ON true
 #define TURN_OFF false
@@ -57,19 +55,19 @@ public:
 	std::atomic<bool> stateConnected;				// state discribe status of connection to PLC
 	std::atomic<bool> working;						// state discribe status of object is working or not
 	std::atomic<bool> started;						// state discribe status of object has started or not. it will be used to check to call restore() function
-	static std::string dbName;						// database name
-	std::vector<std::string> collection;			// collection name
-	std::string machineName;						
-	char plcID;										// id of PLC, its used for confirm with PLC
+	static std::string dbName;		// database name
+	std::vector<std::string> collection;
+	std::string machineName;
+	char plcID;						// id of PLC
 	static uint32_t timeIndentifyPLC;
 	static std::vector<ScrewMachine *> screws;
 	static std::vector<ScrewMachine *> screwsDisconnect;
 	enum ModeWorking mode;
-	Database dtbase;				// object connect to database
 private:
 	// Functions work with PLC
 	void waitDataPLC();
 	static void isAlivePLC();		// checking connection to PLC is still alive.
+	Database dtbase;				// object connect to database
 	struct tm currTime_;
 	int lastDay_;
 	std::thread *cycle_;
@@ -85,7 +83,6 @@ private:
 	void handleLogInfor(char c);
 	// application Measure pressure of vacuum
 	void handlePressureVacuum(struct tm curr);	// function to request selftest plc and measure vaccum
-	void measurePressureVacuum();
 	ADC_Converter vacuum_;				// object vaccum
 	std::atomic<bool> readyToMeasure_;	// waitting to measure pressure of vacuum
 	std::atomic<bool> vacuum_enable_;	// enable / disable vaccum app

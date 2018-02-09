@@ -15,12 +15,10 @@ std::string ScrewMachine::dbName;
 std::vector<ScrewMachine *> ScrewMachine::screws;
 std::vector<std::string> ScrewMachine::listPort;
 std::thread *ScrewMachine::thread_alive_;
-uint32_t ScrewMachine::timeIndentifyPLC = 60;	// unit seconds
+uint32_t ScrewMachine::timeIndentifyPLC = 5;	// unit seconds
 
 bool ScrewMachine::begin() {
 	dtbase.begin(dbName.c_str());
-	dtbase.network.init();			// init network way. its the path to send data to server
-	
 	plc.init(CHECKING_ALIVE);
 	plc.begin(plc.portName);
 	if(vacuum_enable_) {
@@ -152,10 +150,14 @@ void ScrewMachine::waitDataPLC() {
 		        LOG_VERB << machineName << ":" << c;
 				// check self-test
 				if(c=='S') {
-					measurePressureVacuum(); // it will take 2 seconds to measure
+					readyToMeasure_ = true;
 				} else {
 					handleLogInfor(c);
 				}
+				// switch (mode) {
+				// 	case modeVacuum: readyToMeasure_ = true; break;
+				// 	case modeNormal: handleLogInfor(c); break;
+				// }
 	    	}
 		}
     	usleep(10000); // 10ms. longer time will reduce consumption of cpu in pi
@@ -265,29 +267,27 @@ void ScrewMachine::appPressureVacuum(bool state) {
 	}
 }
 
-void ScrewMachine::measurePressureVacuum() {
-	readyToMeasure_ = true;
-	sleep(5);	// delay 5s for pressure of vacuum get stable
-	float avr = 0;
-	float data[5];
-	for (size_t k = 0; k < 5; k++) {
-		data[k] = convertKpa(vacuum_.readVoltage(MODULE_1, CHANEL_0));
-		avr += data[k];
-	}
-	avr = (float)(avr/5);
-	LOG << machineName << ": Pressure of vacuum on avarage: " << avr;
-	dtbase.insertPressureVacuum(collection[1].c_str(), avr);
-	plc.writeDate3Times('o');
-	readyToMeasure_ = false;
-}
-
 void ScrewMachine::handlePressureVacuum(struct tm curr) {
-	// check ready to measure
-	if(!readyToMeasure_) {
+	// ready to measure
+	if(readyToMeasure_) {
+		usleep(1500000);	// delay 1.5s for pressure of vacuum get stable
+		float avr = 0;
+		float data[5];
+		for (size_t k = 0; k < 5; k++) {
+			data[k] = convertKpa(vacuum_.readVoltage(MODULE_1, CHANEL_0));
+			avr += data[k];
+		}
+		avr = (float)(avr/5);
+		LOG << machineName << ": Pressure of vacuum on avarage: " << avr;
+		dtbase.insertPressureVacuum(collection[1].c_str(), avr);
+		plc.writeDate3Times('o');
+		readyToMeasure_ = false;
+	}
+	// check schedule
+	else {
 		int tm_seconds = curr.tm_hour*3600 + curr.tm_min*60 + curr.tm_sec;
 		for (size_t i = 0; i < pressureSchedule.size(); i++) {
 			if(pressureSchedule[i] == tm_seconds) {
-				// plc.writeData('o');
 				LOG << machineName << ": Request self-test mode";
 				for (size_t k = 0; k < 3; k++) {
 					if(readyToMeasure_) break;
@@ -320,5 +320,5 @@ void ScrewMachine::scheduleWorking() {
 }
 
 float convertKpa(float x) {
-	return (float)((x-min_val) * (pressure_max - pressure_min) / (max_val-min_val) + pressure_min);
+  return (float)((x-min_val) * (pressure_max - pressure_min) / (max_val-min_val) + pressure_min);
 }

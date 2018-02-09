@@ -6,15 +6,14 @@
 #include <signal.h>
 #include <iostream>
 #include <fstream>
-#include "beU-log.h"
+#include "bone-log.h"
 #include "database.h"
-#include "beU-TCP.h"
+#include "screw-machine.h"
 #include "usb-port.h"
 #include "json.hpp"
-#include "screw-machine.h"
 
 using namespace nlohmann;
-using namespace BeU;
+using namespace BONE;
 
 int main(int argc, char const *argv[])
 {
@@ -59,13 +58,6 @@ int main(int argc, char const *argv[])
             LOG_ERR << "Set up fail PLC/setting[" << i << "]/id";
         }
 
-        // Set MAC address of machine, its will be identify machine in database
-        if(conf["PLC"]["setting"][i]["MAC"].is_string()) {
-            listMachine[i].dtbase.machineMAC = conf["PLC"]["setting"][i]["MAC"];
-        } else {
-            LOG_ERR << "Set up fail PLC/setting[" << i << "]/MAC";
-        }
-
         // set machine name
         if(conf["PLC"]["setting"][i]["machineName"].is_string()) {
             listMachine[i].machineName = conf["PLC"]["setting"][i]["machineName"];
@@ -91,23 +83,13 @@ int main(int argc, char const *argv[])
         }
     }
 
-    // setup port for tcp/ip network
-    // SocketServer mailBox;
-    // mailBox.listen_port = (conf["system"]["listen_port"].is_number()) ? (int32_t)(conf["system"]["listen_port"]) : 8888;
-    
-    // setup pathway to server (TCP-IP method)
-    // SocketClient mailman;
-    // mailman.serverIP = (conf["system"]["serverIP"].is_string()) ? (conf["system"]["serverIP"]) : "127.0.0.1";
-    // mailman.port = (conf["system"]["server_port"].is_number()) ? (int32_t)(conf["system"]["server_port"]) : 8880;
-    // mailman.initSocket();
-
-    // Indentifying plc in network
+    // Step 3: Indentifying plc in network
     // Indentifying what plc is connecting to usb port.
     ScrewMachine::listPort = StreamPortUSB::listPort();     // get list of usb what is opening
     ScrewMachine::port.init();                              // setup mode to indentifyPLC
     ScrewMachine::indentifyPLC();
 
-    // Start working
+    // step 3: start working
     for(auto & screw: ScrewMachine::screws) {
         if(screw->stateConnected) { // assurance screw has connected successful.
             LOG << "Starting work with PLC (" << screw->plcID <<") on port " << screw->plc.portName;
@@ -118,36 +100,6 @@ int main(int argc, char const *argv[])
     }
     // this function will maintain port which is connected to plc.
     ScrewMachine::checkingAlivePLC();
-    
-    listMachine[0].dtbase.begin("ScrewMachine");
-    listMachine[0].dtbase.network.serverIP = "192.168.1.2";
-    listMachine[0].dtbase.network.port = 5152;
-    listMachine[0].dtbase.network.init();
-    // LOG << "Why";
-    while(true) {
-        // mailman.sendMessage("what the hell");
-        // listMachine[0].dtbase.network.upload("whats about now !");
-        listMachine[0].dtbase.increaseElement("ScrewByDay_1", FEEDER, 1);
-        sleep(1);
-        listMachine[0].dtbase.increaseDraftHand("ScrewByDay_1", 1, 1);
-        sleep(1);
-        listMachine[0].dtbase.increaseScrewPosition("ScrewByDay_1", 2, 1);
-        sleep(1);
-        listMachine[0].dtbase.insertNewDocument("ScrewByDay_1");
-        sleep(1);
-        listMachine[0].dtbase.insertPressureVacuum("ScrewByDay_1", 40);
-        sleep(5);
-    }
-    
-    /*
-    // Waitting message from server.
-    mailBox.initSocket(mailBox.listen_port);
-    while(true) {
-        if(mailBox.hasMessage()) {
-            LOG << mailBox.mesg;
-        }
-    }
-    */
     // pause this main thread. Everything work in screw-machine.cc
     pause();
 

@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <signal.h>
-#include "beU-log.h"
+#include "bone-log.h"
 #include "database.h"
 
-using namespace BeU;
+using namespace BONE;
 #define DATABASE_NAME "ScrewMachine"
 
 
