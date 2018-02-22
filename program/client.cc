@@ -10,7 +10,7 @@
 #include <unistd.h>     /* for close() */
 
 #define BUFFSIZE 256
-#define PORT 5152
+#define PORT 8888
 
 void error(const char *msg){
     perror(msg);
@@ -19,7 +19,7 @@ void error(const char *msg){
 
 int main(int argc, char *argv[]){
 
-    int sockfd, n;
+    int sockfd;
     struct sockaddr_in serv_addr;
     char buffer[BUFFSIZE];
     char *servIP;
@@ -30,15 +30,17 @@ int main(int argc, char *argv[]){
         servIP = argv[1];
     }
 
+    printf("Connecting to server %s\n", servIP);
+    fflush(stdout);
+
     if ((sockfd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
         error("socket() failed");
-
+    
     /* Ghi cau truc dia chi cho server */
     memset(&serv_addr, 0, sizeof(serv_addr));               /* Zero out structure */
     serv_addr.sin_family      = PF_INET;                    /* Internet address family */
     serv_addr.sin_addr.s_addr = inet_addr(servIP);          /* Server IP address */
     serv_addr.sin_port        = htons(PORT);                /* Server port */
-
 
     if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0) 
         error("ERROR connecting");

@@ -120,7 +120,7 @@ int main(int argc, char const *argv[])
     ScrewMachine::checkingAlivePLC();
     
     listMachine[0].dtbase.begin("ScrewMachine");
-    listMachine[0].dtbase.network.serverIP = "192.168.1.2";
+    listMachine[0].dtbase.network.serverIP = "127.0.0.1";
     listMachine[0].dtbase.network.port = 5152;
     listMachine[0].dtbase.network.init();
     // LOG << "Why";
@@ -129,13 +129,13 @@ int main(int argc, char const *argv[])
         // listMachine[0].dtbase.network.upload("whats about now !");
         listMachine[0].dtbase.increaseElement("ScrewByDay_1", FEEDER, 1);
         sleep(1);
-        listMachine[0].dtbase.increaseDraftHand("ScrewByDay_1", 1, 1);
+        listMachine[0].dtbase.increaseDraftHand("ScrewByDay_1", 2, 1);
         sleep(1);
-        listMachine[0].dtbase.increaseScrewPosition("ScrewByDay_1", 2, 1);
-        sleep(1);
-        listMachine[0].dtbase.insertNewDocument("ScrewByDay_1");
-        sleep(1);
-        listMachine[0].dtbase.insertPressureVacuum("ScrewByDay_1", 40);
+        listMachine[0].dtbase.increaseScrewPosition("ScrewByDay_1", 15, 1);
+        // sleep(1);
+        // listMachine[0].dtbase.insertNewDocument("ScrewByDay_1");
+        // sleep(1);
+        // listMachine[0].dtbase.insertPressureVacuum("ScrewByDay_1", 40);
         sleep(5);
     }
     

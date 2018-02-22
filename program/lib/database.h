@@ -2,6 +2,7 @@
 #define DATABASE_H
 
 #include <iostream>
+#include <sstream>
 #include "base/beU-database.h"
 #include "base/beU-TCP.h"
 #include "base/json.hpp"
@@ -41,9 +42,9 @@ public:
 	int insertNewDocument(const char* COLL);
 	int insertPressureVacuum(const char* COLL, float data);
 	// Local database
-	int increaseElementLocal(const char* COLL, std::string type, int value);
-	int increaseDraftHandLocal(const char* COLL, int pos, int value);
-	int increaseScrewPositionLocal(const char* COLL, int pos, int value);
+	int increaseElementLocal(const char* COLL, int last, std::string type, int value);
+	int increaseDraftHandLocal(const char* COLL, int last, std::string ss, int pos, int value);
+	int increaseScrewPositionLocal(const char* COLL, int last, std::string ss, int pos, int value);
 	int insertNewDocumentLocal(const char* COLL);
 	int insertPressureVacuumLocal(const char* COLL, float data);
 	// Online database

@@ -23,8 +23,15 @@ int Database::increaseElement(const char* COLL, int type, int value) {
 		case FIXTURE: ss = "fixture"; break;
 	}
 
-	int res = increaseElementLocal(COLL, ss, value);
-	int resOnline = increaseElementOnline(machineMAC, std::string(COLL), ss, value);
+	// get last id of last document via "total" field.
+	int32_t last = 0;
+	MongoDatabase::getValInt(COLL, "_id", "id", "total", last);
+	last = (last - 1) < 0 ? 0 : last -1; // the first document indexed from 0, so need to abstract 1
+	int32_t curr = 0;
+	MongoDatabase::getValInt(COLL, "_id", last, ss.c_str(), curr);
+
+	int res = increaseElementLocal(COLL, last, ss, curr+value);
+	int resOnline = increaseElementOnline(machineMAC, std::string(COLL), ss, curr+value);
 
 	if ((res==0)&&(resOnline==0))
 		return 0;
@@ -32,16 +39,32 @@ int Database::increaseElement(const char* COLL, int type, int value) {
 }
 
 int Database::increaseDraftHand(const char* COLL, int pos, int value) {
-	int res = increaseDraftHandLocal(COLL, pos, value);
-	int resOnline = increaseDraftHandOnline(machineMAC, COLL, pos, value);
+	// get last id of last document via "total" field.
+	int32_t last = 0;
+	MongoDatabase::getValInt(COLL, "_id", "id", "total", last);
+	last = (last - 1) < 0 ? 0 : last -1; // the first document indexed from 0, so need to abstract 1
+	int32_t curr = 0;
+	std::string ss = DRAFT + std::string(".") + std::to_string(pos);
+	MongoDatabase::getValInt(COLL, "_id", last, ss.c_str(), curr);
+
+	int res = increaseDraftHandLocal(COLL, last, ss, pos, curr+value);
+	int resOnline = increaseDraftHandOnline(machineMAC, COLL, pos, curr+value);
 	if ((res==0)&&(resOnline==0))
 		return 0;
 	else return 1;
 }
 
 int Database::increaseScrewPosition(const char* COLL, int pos, int value) {
-	int res = increaseScrewPositionLocal(COLL, pos, value);
-	int resOnline = increaseScrewPositionOnline(machineMAC, COLL, pos, value);
+	// get last id of last document via "total" field.
+	int32_t last = 0;
+	MongoDatabase::getValInt(COLL, "_id", "id", "total", last);
+	last = (last - 1) < 0 ? 0 : last -1; 	// the first document indexed from 0, so need to abstract 1
+	int32_t curr = 0;
+	std::string ss = SCREW_POSITION + std::string(".") + std::to_string(pos);
+	MongoDatabase::getValInt(COLL, "_id", last, ss.c_str(), curr);
+
+	int res = increaseScrewPositionLocal(COLL, last, ss, pos, curr+value);
+	int resOnline = increaseScrewPositionOnline(machineMAC, COLL, pos, curr+value);
 	if ((res==0)&&(resOnline==0))
 		return 0;
 	else return 1;
@@ -63,36 +86,16 @@ int Database::insertPressureVacuum(const char* COLL, float data) {
 	else return 1;
 }
 
-int Database::increaseElementLocal(const char* COLL, std::string type, int value) {
-	// get last id of last document via "total" field.
-	int32_t last = 0;
-	MongoDatabase::getValInt(COLL, "_id", "id", "total", last);
-	last = (last - 1) < 0 ? 0 : last -1; // the first document indexed from 0, so need to abstract 1
-	int32_t curr = 0;
-	MongoDatabase::getValInt(COLL, "_id", last, type.c_str(), curr);
-	return MongoDatabase::update(COLL, "_id", last, type.c_str(), curr+value);
+int Database::increaseElementLocal(const char* COLL, int last, std::string type, int value) {
+	return MongoDatabase::update(COLL, "_id", last, type.c_str(), value);
 }
 
-int Database::increaseDraftHandLocal(const char* COLL, int pos, int value) {
-	// get last id of last document via "total" field.
-	int32_t last = 0;
-	MongoDatabase::getValInt(COLL, "_id", "id", "total", last);
-	last = (last - 1) < 0 ? 0 : last -1; // the first document indexed from 0, so need to abstract 1
-	int32_t curr = 0;
-	std::string ss = DRAFT + std::string(".") + std::to_string(pos);
-	MongoDatabase::getValInt(COLL, "_id", last, ss.c_str(), curr);
-	return MongoDatabase::update(COLL, "_id", last, ss.c_str(), curr+value);
+int Database::increaseDraftHandLocal(const char* COLL, int last, std::string ss, int pos, int value) {
+	return MongoDatabase::update(COLL, "_id", last, ss.c_str(), value);
 }
 
-int Database::increaseScrewPositionLocal(const char* COLL, int pos, int value) {
-	// get last id of last document via "total" field.
-	int32_t last = 0;
-	MongoDatabase::getValInt(COLL, "_id", "id", "total", last);
-	last = (last - 1) < 0 ? 0 : last -1; 	// the first document indexed from 0, so need to abstract 1
-	int32_t curr = 0;
-	std::string ss = SCREW_POSITION + std::string(".") + std::to_string(pos);
-	MongoDatabase::getValInt(COLL, "_id", last, ss.c_str(), curr);
-	return MongoDatabase::update(COLL, "_id", last, ss.c_str(), curr+value);
+int Database::increaseScrewPositionLocal(const char* COLL, int last, std::string ss, int pos, int value) {
+	return MongoDatabase::update(COLL, "_id", last, ss.c_str(), value);
 }
 
 int Database::insertNewDocumentLocal(const char* COLL) {
@@ -123,41 +126,79 @@ int64_t Database::lastDateTime(const char *COLL) {
 
 int Database::increaseElementOnline(std::string MAC, std::string COLL, std::string type, int value) {
 	json js = {
+		{"machine", "ScrewMachine"},
 		{"MAC", MAC},
-		{"colection", COLL},
-		{"type", type},
-		{"value", value}
+		{"collection", COLL},
+		{"function", "findOneAndUpdate"},
+		{"query", {}},
+    	{
+			"set", {
+				{"$set", {
+						{type, value}
+					}
+				}
+			} 
+		},
+		{"options", { {"sort", {{"$natural", -1}}}, {"returnOriginal", false}, {"upsert", true}}}
 	};
-	
+
 	return network.upload(js.dump());
 }
 
 int Database::increaseDraftHandOnline(std::string MAC, std::string COLL, int pos, int value) {
+	std::stringstream ss;
+	ss << DRAFT << '.' << pos;
+
 	json js = {
+		{"machine", "ScrewMachine"},
 		{"MAC", MAC},
-		{"colection", COLL},
-		{"pos", pos},
-		{"value", value}
+		{"collection", COLL},
+		{"function", "findOneAndUpdate"},
+		{"query", {}},
+    	{
+			"set", {
+				{"$set", {
+						{ss.str(), value}
+					}
+				}
+			} 
+		},
+		{"options", { {"sort", {{"$natural", -1}}}, {"returnOriginal", false}, {"upsert", true}}}
 	};
-	
+
 	return network.upload(js.dump());
 }
 
 int Database::increaseScrewPositionOnline(std::string MAC, std::string COLL, int pos, int value) {
+	std::stringstream ss;
+	ss << SCREW_POSITION << '.' << pos;
+
 	json js = {
+		{"machine", "ScrewMachine"},
 		{"MAC", MAC},
-		{"colection", COLL},
-		{"pos", pos},
-		{"value", value}
+		{"collection", COLL},
+		{"function", "findOneAndUpdate"},
+		{"query", {}},
+    	{
+			"set", {
+				{"$set", {
+						{ss.str(), value}
+					}
+				}
+			} 
+		},
+		{"options", { {"sort", {{"$natural", -1}}}, {"returnOriginal", false}, {"upsert", true}}}
 	};
-	
+
 	return network.upload(js.dump());
 }
 
 int Database::insertNewDocumentOnline(std::string MAC, std::string COLL) {
 	json js = {
+		{"machine", "ScrewMachine"},
 		{"MAC", MAC},
-		{"colection", COLL}
+		{"collection", COLL},
+		{"function", "insertOne"}
 	};
 	
 	return network.upload(js.dump());
@@ -165,9 +206,10 @@ int Database::insertNewDocumentOnline(std::string MAC, std::string COLL) {
 
 int Database::insertPressureVacuumOnline(std::string MAC, std::string COLL, float data) {
 	json js = {
+		{"machine", "ScrewMachine"},
 		{"MAC", MAC},
-		{"colection", COLL},
-		{"value", data}
+		{"collection", COLL},
+		{"function", "insertOne"}
 	};
 	
 	return network.upload(js.dump());
